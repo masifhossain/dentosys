@@ -1,0 +1,60 @@
+table.calendar{width:100%;border-collapse:collapse;margin-top:15px}
+.calendar th{background:#f2f2f2;border:1px solid #ccc;padding:4px}
+.calendar td{border:1px solid #ccc;vertical-align:top;height:90px;padding:4px}
+.calendar td.empty{background:#fafafa}
+.calendar .day{font-weight:bold;margin-bottom:4px}
+.appt{font-size:11px;padding:1px 2px;margin-bottom:2px;border-radius:3px;color:#000}
+.appt.pending{background:#ffd966}
+.appt.ok{background:#a0e7a0}
+.appt.cancel{background:#f6a5a5}
+.btn{background:#0077aa;color:#fff;padding:6px 10px;text-decoration:none;border-radius:3px}
+.btn.ok     { background:#2ecc71;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-right:4px; }
+.btn.cancel { background:#e74c3c;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none; }
+details[open] > summary::after { content: '▲'; margin-left:6px; font-size:10px; }
+details > summary::after       { content: '▼'; margin-left:6px; font-size:10px; }
+details > summary { font-weight:bold; }
+.btn.ok{background:#2ecc71;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none}
+details[open] > summary::after {content:'▲';margin-left:6px;font-size:10px;}
+details > summary::after       {content:'▼';margin-left:6px;font-size:10px;}
+details > summary {font-weight:bold;}
+.btn.ok {background:#3498db;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none}
+.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
+.btn.ok{background:#2ecc71}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+.btn.ok{background:#3498db;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+.card {background:#f5f5f5;border:1px solid #ddd;padding:12px 18px;border-radius:6px;min-width:160px;text-align:center;}
+.card h3{margin:0 0 6px;font-size:16px;color:#555;}
+.card p{margin:0;font-size:20px;font-weight:bold;}
+.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+.btn.cancel{background:#e74c3c;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+input[type="password"]{width:120px;}
+.card{
+  background:#f5f7fa;border:1px solid #d3dce6;border-radius:6px;
+  min-width:180px;padding:14px 18px;text-align:center;
+}
+.card h3{margin:0 0 6px;font-size:15px;color:#555}
+.card p{margin:0;font-size:22px;font-weight:bold}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:6px}
+th{background:#f4f4f4}
+.card{background:#f5f5f5;border:1px solid #ddd;border-radius:6px;padding:14px;text-align:center}
+.card h3{margin:0 0 4px;font-size:16px}
