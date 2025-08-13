@@ -13,7 +13,7 @@ require_login();
 /* ───────── Admin-only ───────── */
 if (!is_admin()) {
     flash('Financial reports are restricted to administrators.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* --------------------------------------------------------------

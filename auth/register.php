@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="utf-8">
   <title>DentoSys · Register</title>
-  <link rel="stylesheet" href="/dentosys/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
   <style>
     body{display:flex;justify-content:center;align-items:center;height:100vh;background:#e9f3f7;font-family:Arial,Helvetica,sans-serif;margin:0}
     .card{background:#fff;border:1px solid #ccc;border-radius:8px;padding:28px 38px;width:380px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <div class="card">
-    <img src="/dentosys/assets/images/DentoSys_Logo.png" alt="DentoSys logo">
+    <img src="/assets/images/DentoSys_Logo.png" alt="DentoSys logo">
     <h2>Create&nbsp;Account</h2>
 
     <?php if ($msg = get_flash()) echo $msg; ?>

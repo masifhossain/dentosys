@@ -14,7 +14,7 @@ require_login();
 /* ───────── Restrict to Admins only ───────── */
 if (!is_admin()) {
     flash('Audit Log is restricted to administrators.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* --------------------------------------------------------------

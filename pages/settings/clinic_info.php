@@ -13,7 +13,7 @@ require_login();
 /* ───────── Allow admins only ───────── */
 if (!is_admin()) {
     flash('Clinic settings are restricted to administrators.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* ───────── Ensure settings row exists (singleton pattern) ───────── */
@@ -84,7 +84,7 @@ include BASE_PATH . '/templates/sidebar.php';
 
     <?php if (!empty($info['logo_path'])): ?>
       <p>Current logo:<br>
-         <img src="/dentosys/uploads/<?= urlencode($info['logo_path']); ?>"
+         <img src="/uploads/<?= urlencode($info['logo_path']); ?>"
               alt="logo" style="max-height:80px;">
       </p>
     <?php endif; ?>

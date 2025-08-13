@@ -44,21 +44,21 @@ $active  = fn(string $sub) =>
   </p>
 
   <nav>
-    <a <?= $active('/dashboard.php');   ?> href="/dentosys/pages/dashboard.php">Dashboard</a>
-    <a <?= $active('/patients');        ?> href="/dentosys/pages/patients/list.php">Patients</a>
-    <a <?= $active('/appointments');    ?> href="/dentosys/pages/appointments/calendar.php">Appointments</a>
-    <a <?= $active('/records');         ?> href="/dentosys/pages/records/list.php">Clinical&nbsp;Records</a>
+    <a <?= $active('/dashboard.php');   ?> href="/pages/dashboard.php">Dashboard</a>
+    <a <?= $active('/patients');        ?> href="/pages/patients/list.php">Patients</a>
+    <a <?= $active('/appointments');    ?> href="/pages/appointments/calendar.php">Appointments</a>
+    <a <?= $active('/records');         ?> href="/pages/records/list.php">Clinical&nbsp;Records</a>
 
     <?php if ($roleID !== 3): /* Receptionist hidden */ ?>
-      <a <?= $active('/reports');       ?> href="/dentosys/pages/reports/financial.php">Reports</a>
-      <a <?= $active('/communications');?> href="/dentosys/pages/communications/templates.php">Communications</a>
+      <a <?= $active('/reports');       ?> href="/pages/reports/financial.php">Reports</a>
+      <a <?= $active('/communications');?> href="/pages/communications/templates.php">Communications</a>
     <?php endif; ?>
 
     <?php if ($roleID === 1): /* Admin only */ ?>
-      <a <?= $active('/settings');      ?> href="/dentosys/pages/settings/clinic_info.php">Settings</a>
+      <a <?= $active('/settings');      ?> href="/pages/settings/clinic_info.php">Settings</a>
     <?php endif; ?>
 
     <hr style="border-color:#226;">
-    <a href="/dentosys/auth/logout.php">Logout</a>
+    <a href="/auth/logout.php">Logout</a>
   </nav>
 </aside>

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['role']    = $row['role_id'];
         flash('Welcome back!');
-        redirect('/dentosys/index.php');
+        redirect('/index.php');
     } else {
         flash('Invalid credentials.', 'error');
     }
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="utf-8">
   <title>DentoSys · Login</title>
-  <link rel="stylesheet" href="/dentosys/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
   <style>
     body{display:flex;justify-content:center;align-items:center;height:100vh;background:#e9f3f7;font-family:Arial,Helvetica,sans-serif;margin:0}
     .login-card{background:#fff;border:1px solid #ccc;border-radius:8px;padding:30px 40px;width:340px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <div class="login-card">
-    <img src="/dentosys/assets/images/DentoSys_Logo.png" alt="DentoSys logo">
+    <img src="/assets/images/DentoSys_Logo.png" alt="DentoSys logo">
     <h2>Sign&nbsp;In</h2>
 
     <?php if ($msg = get_flash()) echo $msg; ?>

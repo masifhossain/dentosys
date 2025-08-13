@@ -63,7 +63,7 @@ include BASE_PATH . '/templates/sidebar.php';
       ['Settings','pages/settings/clinic_info.php','Configure clinic details'],
     ];
     foreach ($kb as $item): ?>
-      <a class="card" href="/dentosys/<?= $item[1]; ?>" style="text-decoration:none;color:#000;">
+      <a class="card" href="/<?= $item[1]; ?>" style="text-decoration:none;color:#000;">
         <h3><?= $item[0]; ?></h3>
         <p style="font-size:12px;"><?= $item[2]; ?></p>
       </a>

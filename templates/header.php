@@ -16,7 +16,7 @@ $pageTitle = $pageTitle ?? 'DentoSys';
   <title><?= htmlspecialchars($pageTitle); ?></title>
 
   <!-- Main stylesheet (optional – keep if you have one) -->
-  <link rel="stylesheet" href="/dentosys/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
   <!-- Fallback / critical styles -->
   <style>
