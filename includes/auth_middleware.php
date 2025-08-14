@@ -23,7 +23,7 @@ function get_flash() {
 // Simple auth check
 function require_login() {
     if (empty($_SESSION['user_id'])) {
-        redirect('/dentosys/login.php');
+        redirect('/login.php');
     }
 }
 ?>

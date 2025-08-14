@@ -15,7 +15,7 @@ require_login();
 /* ───────── Admin-only gate ───────── */
 if (!is_admin()) {
     flash('User management is restricted to administrators.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* --------------------------------------------------------------

@@ -20,4 +20,4 @@ session_destroy(); // end the session
 
 /* ─── goodbye flash & redirect ─── */
 flash('You have been logged out.');
-redirect('/dentosys/auth/login.php');
+redirect('/auth/login.php');

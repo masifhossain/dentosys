@@ -14,7 +14,7 @@ require_login();
 $allowed = [1, 2];              // Admin & Dentist
 if (!in_array((int)($_SESSION['role'] ?? 0), $allowed, true)) {
     flash('Access denied.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* ---------- Save new template ---------- */

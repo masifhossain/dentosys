@@ -117,7 +117,7 @@ include BASE_PATH . '/templates/sidebar.php';
         <td><?= $f['uploaded_at']; ?></td>
         <td>
           <a class="btn ok" target="_blank"
-             href="/dentosys/uploads/<?= urlencode($f['stored_path']); ?>">
+             href="/uploads/<?= urlencode($f['stored_path']); ?>">
              Open
           </a>
         </td>

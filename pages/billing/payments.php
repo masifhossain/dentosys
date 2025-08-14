@@ -12,7 +12,7 @@ require_login();
 /* ───────── Restrict to Admin (1) or Receptionist (3) ───────── */
 if (!is_admin() && ($_SESSION['role'] ?? 0) !== 3) {
     flash('You do not have permission to manage payments.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* ───────── Handle new-payment form ───────── */

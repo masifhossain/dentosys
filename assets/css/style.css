@@ -1,60 +1,121 @@
-table.calendar{width:100%;border-collapse:collapse;margin-top:15px}
-.calendar th{background:#f2f2f2;border:1px solid #ccc;padding:4px}
-.calendar td{border:1px solid #ccc;vertical-align:top;height:90px;padding:4px}
-.calendar td.empty{background:#fafafa}
-.calendar .day{font-weight:bold;margin-bottom:4px}
-.appt{font-size:11px;padding:1px 2px;margin-bottom:2px;border-radius:3px;color:#000}
-.appt.pending{background:#ffd966}
-.appt.ok{background:#a0e7a0}
-.appt.cancel{background:#f6a5a5}
-.btn{background:#0077aa;color:#fff;padding:6px 10px;text-decoration:none;border-radius:3px}
-.btn.ok     { background:#2ecc71;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-right:4px; }
-.btn.cancel { background:#e74c3c;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none; }
-details[open] > summary::after { content: '▲'; margin-left:6px; font-size:10px; }
-details > summary::after       { content: '▼'; margin-left:6px; font-size:10px; }
-details > summary { font-weight:bold; }
-.btn.ok{background:#2ecc71;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none}
-details[open] > summary::after {content:'▲';margin-left:6px;font-size:10px;}
-details > summary::after       {content:'▼';margin-left:6px;font-size:10px;}
-details > summary {font-weight:bold;}
-.btn.ok {background:#3498db;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none}
-.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
-.btn.ok{background:#2ecc71}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-.btn.ok{background:#3498db;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-.card {background:#f5f5f5;border:1px solid #ddd;padding:12px 18px;border-radius:6px;min-width:160px;text-align:center;}
-.card h3{margin:0 0 6px;font-size:16px;color:#555;}
-.card p{margin:0;font-size:20px;font-weight:bold;}
-.btn{background:#0077aa;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;margin-left:6px}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-.btn.cancel{background:#e74c3c;color:#fff;padding:4px 8px;border-radius:3px;text-decoration:none;}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-input[type="password"]{width:120px;}
-.card{
-  background:#f5f7fa;border:1px solid #d3dce6;border-radius:6px;
-  min-width:180px;padding:14px 18px;text-align:center;
+/* General Body & Layout */
+body {
+  background-color: #f8f9fa;
 }
-.card h3{margin:0 0 6px;font-size:15px;color:#555}
-.card p{margin:0;font-size:22px;font-weight:bold}
-table{border-collapse:collapse;width:100%}
-th,td{border:1px solid #ccc;padding:6px}
-th{background:#f4f4f4}
-.card{background:#f5f5f5;border:1px solid #ddd;border-radius:6px;padding:14px;text-align:center}
-.card h3{margin:0 0 4px;font-size:16px}
+
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background-color: #004F6E;
+  color: #fff;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar .logo {
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.sidebar .logo img {
+  max-width: 150px;
+}
+
+.sidebar .nav-link {
+  color: #e9ecef;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+  color: #fff;
+  background-color: #003f58;
+  border-left: 3px solid #0dcaf0;
+  padding-left: calc(1.25rem - 3px);
+}
+
+.sidebar .user-info {
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  border-top: 1px solid #226680;
+  border-bottom: 1px solid #226680;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.sidebar .user-info strong {
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+/* Flash Messages */
+.flash {
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+.flash.success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+.flash.error {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+.flash.info {
+  color: #055160;
+  background-color: #cff4fc;
+  border-color: #b6effb;
+}
+
+
+/* Calendar */
+.calendar {
+  margin-top: 1.5rem;
+}
+.calendar td {
+  vertical-align: top;
+  height: 100px;
+}
+.calendar .day {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.calendar .empty {
+  background-color: #f8f9fa;
+}
+.appt {
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  margin-bottom: 3px;
+  border-radius: 3px;
+  color: #212529;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.appt.pending { background-color: #ffc107; }
+.appt.ok, .appt.Approved { background-color: #198754; color: #fff; }
+.appt.cancel, .appt.Cancelled { background-color: #dc3545; color: #fff; }
+
+
+/* Login/Register Cards */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+}
+.auth-card img {
+  max-width: 180px;
+  margin: 0 auto 1.5rem;
+  display: block;
+}

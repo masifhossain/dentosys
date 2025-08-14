@@ -18,7 +18,7 @@ require_login();
 /* ───────── Admin-only ───────── */
 if (!is_admin()) {
     flash('Roles management is restricted to administrators.');
-    redirect('/dentosys/index.php');
+    redirect('/index.php');
 }
 
 /* --------------------------------------------------------------
