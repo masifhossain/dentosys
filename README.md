@@ -65,7 +65,7 @@ You will need the following installed on your system:
 
 3.  **Configure Database Connection:**
 
-    * Locate the database configuration file (`includes/db_config.php`).
+    * Locate the database configuration file (`includes/db.php`).
 
     * Update the credentials to match your MariaDB setup:
 
