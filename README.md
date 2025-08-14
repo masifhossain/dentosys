@@ -1,36 +1,93 @@
 # DentoSys
 
-PHP-based website (Project 2 for CIHE), expanding from Project 1 definitions.
+DentoSys is a web-based application designed to help dental businesses digitize and streamline their operations. Built with PHP, HTML, JavaScripy (maybe) and CSS, and utilizing a MariaDB database, DentoSys aims to provide an efficient solution for managing various aspects of a dental practice.
 
-## Table of Contents
-- [Prerequisites](#prerequisites)
-- [Quick Setup](#quick-setup)
-  - [VSCODE Live Server](#vscode-live-server)
-  - [XAMPP Database Setup](#xampp-database-setup)
-- [TODO](#todo)
+## Features
 
-## Prerequisites
-- PHP >= 7.4
-- MySQL(Recommended)/MariaDB
-- VSCODE (recommended editor)
-- XAMPP (for database only in current setup)
+* **Patient Management:** Securely store and manage patient information.
 
-## Quick Setup
+* **Appointment Scheduling:** Efficiently schedule, view, and modify patient appointments.
 
-### VSCODE Live Server
-PHP server setup:
-Follow this for now: [Guide](https://dev.to/itsmestevieg/vscode-liveserver-for-php-2i3m)
+* **Treatment Records:** Keep detailed records of treatments and procedures.
 
-### XAMPP Database Setup
-1. Start Apache and MySQL in XAMPP Control Panel
-2. Access phpMyAdmin at `http://localhost/phpmyadmin`
-3. Create database: `dentosys_db` (no passsword, leave everything default)
+* **Billing & Invoicing:** Generate and manage invoices for services rendered.
 
-If Stuck: [Guide](https://www.geeksforgeeks.org/dbms/performing-database-operations-in-xampp)
+* **Reporting:** Basic reporting functionalities to track business performance.
 
-## TODO (for now, will be expanding)
-- [ ] Create proper ReadMe
-- [ ] Move credentials to environment variables
+* **User Authentication:** Secure login for different roles within the practice.
 
+## Technologies Used
 
-> **Note**: This setup is temporary. Proper deployment scripts, environment configuration, and other stuff will be implemented in future updates.
+* **Backend:** PHP
+
+* **Frontend:** HTML, CSS, JS (maybe)
+
+* **Database:** MariaDB
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+You will need the following installed on your system:
+
+* **PHP:** Version 7.4 or higher.
+
+* **MariaDB:** Version 10.x or higher.
+
+### Manual Installation Steps
+
+1.  **Clone the Repository:**
+
+    ```
+    git clone [https://github.com/your-username/DentoSys.git](https://github.com/your-username/DentoSys.git)
+    cd DentoSys
+    ```
+
+2.  **Database Setup:**
+
+    * Log in to your MariaDB server (e.g., using `mysql -u root -p`).
+
+    * Create a new database for DentoSys:
+
+        ```
+        CREATE DATABASE dentosys_db;
+        ```
+
+    * Import the initial database schema (and any seed data) from the `database/schema.sql` file (or similar, depending on your project structure):
+
+        ```
+        mysql -u your_db_user -p dentosys_db < database/schema.sql
+        ```
+
+        *(Note: You might need to adjust the path to your schema file.)*
+
+3.  **Configure Database Connection:**
+
+    * Locate your database configuration file (e.g., `config/database.php` or `includes/db_config.php`).
+
+    * Update the credentials to match your MariaDB setup:
+
+        ```
+        // Example (adjust paths/variable names as per your actual code)
+        define('DB_HOST', 'localhost');
+        define('DB_USER', 'your_db_user');
+        define('DB_PASS', 'your_db_password');
+        define('DB_NAME', 'dentosys_db');
+        ```
+
+4.  **Run the PHP Development Server:**
+
+    * Navigate to the root directory of the `DentoSys` project in your terminal.
+
+    * Start the PHP built-in web server:
+
+        ```
+        php -S localhost:8000
+        ```
+
+5.  **Access the Application:**
+
+    * Open your web browser and navigate to `http://localhost:8000`.
+
