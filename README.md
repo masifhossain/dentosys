@@ -41,7 +41,7 @@ You will need the following installed on your system:
 1.  **Clone the Repository:**
 
     ```
-    git clone [https://github.com/your-username/DentoSys.git](https://github.com/your-username/DentoSys.git)
+    git clone https://github.com/masifhossain/dentosys
     cd DentoSys
     ```
 
