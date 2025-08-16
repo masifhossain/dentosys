@@ -58,7 +58,7 @@ You will need the following installed on your system:
     * Import the initial database schema (and any seed data) from the `database/schema.sql` file (or similar, depending on your project structure):
 
         ```
-        mysql -u your_db_user -p dentosys_db < database/schema.sql
+        mysql -u your_db_user -p dentosys_db < database/dentosys_db.sql
         ```
 
         *(Note: You might need to adjust the path to your schema file.)*
