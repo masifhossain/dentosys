@@ -70,7 +70,7 @@ You will need the following installed on your system:
     * Update the credentials to match your MariaDB setup:
 
         ```
-        // Example (adjust paths/variable names as per your actual code)
+        // Example 
         define('DB_HOST', 'localhost');
         define('DB_USER', 'your_db_user');
         define('DB_PASS', 'your_db_password');
