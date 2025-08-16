@@ -61,8 +61,6 @@ You will need the following installed on your system:
         mariadb -u your_db_user -p dentosys_db < database/dentosys_db.sql
         ```
 
-        *(Note: You might need to adjust the path to your schema file.)*
-
 3.  **Configure Database Connection:**
 
     * Locate the database configuration file (`includes/db.php`).
