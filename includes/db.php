@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
  */
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
-$DB_PASS = '';          //  ⇦  default XAMPP root has blank password
+$DB_PASS = 'Nostalgia%#512';          //  ⇦  default XAMPP root has blank password
 $DB_NAME = 'dentosys_db';
 
 /* ───────── CONNECT ───────── */
