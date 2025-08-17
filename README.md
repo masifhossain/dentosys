@@ -36,6 +36,18 @@ You will need the following installed on your system:
 
 * **MariaDB:** Version 10.x or higher.
 
+### COPY PASTE THE FOLLOWING IN TERMINAL (POWERSHELL) TO INSTALL PREREQUISITES
+```
+# Download and install Chocolatey first (it’s a package manager).
+powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
+
+# PHP
+choco install php
+
+# MariaDB:
+choco install mariadb
+```
+
 ### Manual Installation Steps
 
 1.  **Clone the Repository:**
