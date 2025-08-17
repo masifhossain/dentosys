@@ -39,7 +39,7 @@ You will need the following installed on your system:
 ### COPY PASTE THE FOLLOWING IN TERMINAL (POWERSHELL) TO INSTALL PREREQUISITES
 ```
 # Download and install Chocolatey first (it’s a package manager).
-powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
+irm "https://community.chocolatey.org/install.ps1" | iex
 
 # PHP
 choco install php
