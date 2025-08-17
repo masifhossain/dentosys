@@ -12,7 +12,7 @@ $ROLE_MAP = [
   3 => 'Receptionist'
 ];
 /* hide Admin option if an Admin already exists */
-$adminExists = $conn->query("SELECT 1 FROM UserTbl WHERE role_id=1 LIMIT 1")->num_rows;
+$adminExists = $conn->query("SELECT 1 FROM usertbl WHERE role_id=1 LIMIT 1")->num_rows;
 if ($adminExists) unset($ROLE_MAP[1]);
 
 /* ───────── Process registration ───────── */
@@ -29,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!isset($ROLE_MAP[$role_id])) {
         flash('Invalid role selected.','error');
     } else {
-        $exists = $conn->query("SELECT 1 FROM UserTbl WHERE email='$email' LIMIT 1")->num_rows;
+        $exists = $conn->query("SELECT 1 FROM usertbl WHERE email='$email' LIMIT 1")->num_rows;
         if ($exists) {
             flash('E-mail already registered.','error');
         } else {
             $hash = password_hash($pass1, PASSWORD_BCRYPT);
             $stmt = $conn->prepare(
-              "INSERT INTO UserTbl (email,password_hash,role_id) VALUES (?,?,?)"
+              "INSERT INTO usertbl (email,password_hash,role_id) VALUES (?,?,?)"
             );
             $stmt->bind_param('ssi', $email, $hash, $role_id);
             if ($stmt->execute()) {

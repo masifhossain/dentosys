@@ -94,6 +94,8 @@ include BASE_PATH . '/templates/sidebar.php';
 
     <button type="submit">Apply</button>
     <a class="btn" href="invoices.php">Reset</a>
+    <a class="btn" style="float:right; margin-left:10px;" href="payments.php">💳 Payments</a>
+    <a class="btn" style="float:right;" href="insurance.php">🏥 Insurance Claims</a>
   </form>
 
   <table>

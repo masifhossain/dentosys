@@ -17,7 +17,7 @@ if ($id <= 0) {
     redirect('list.php');
 }
 
-$stmt = $conn->prepare("SELECT * FROM Patient WHERE patient_id = ? LIMIT 1");
+$stmt = $conn->prepare("SELECT * FROM patient WHERE patient_id = ? LIMIT 1");
 $stmt->bind_param('i', $id);
 $stmt->execute();
 $patient = $stmt->get_result()->fetch_assoc();

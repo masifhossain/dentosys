@@ -17,7 +17,7 @@ if (!is_admin()) {
 }
 
 /* ───────── Ensure settings row exists (singleton pattern) ───────── */
-$conn->query("INSERT IGNORE INTO ClinicInfo (id) VALUES (1)");
+$conn->query("INSERT IGNORE INTO clinicinfo (id) VALUES (1)");
 
 /* ───────── Handle POST update ───────── */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $sql = "UPDATE ClinicInfo
+    $sql = "UPDATE clinicinfo
             SET clinic_name    = '$name',
                 clinic_address = '$addr',
                 phone          = '$phone'
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 /* ───────── Fetch current info ───────── */
-$info = $conn->query("SELECT * FROM ClinicInfo WHERE id = 1")->fetch_assoc();
+$info = $conn->query("SELECT * FROM clinicinfo WHERE id = 1")->fetch_assoc();
 
 include BASE_PATH . '/templates/header.php';
 include BASE_PATH . '/templates/sidebar.php';

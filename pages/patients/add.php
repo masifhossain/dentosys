@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('First and last name are required.');
     } else {
         $stmt = $conn->prepare(
-          "INSERT INTO Patient (first_name, last_name, dob, email, phone, address)
+          "INSERT INTO patient (first_name, last_name, dob, email, phone, address)
            VALUES (?,?,?,?,?,?)"
         );
         $stmt->bind_param('ssssss', $fn, $ln, $dob, $eml, $ph, $addr);

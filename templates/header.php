@@ -15,8 +15,15 @@ $pageTitle = $pageTitle ?? 'DentoSys';
   <meta charset="utf-8">
   <title><?= htmlspecialchars($pageTitle); ?></title>
 
-  <!-- Main stylesheet (optional – keep if you have one) -->
+  <!-- Main stylesheets -->
+  <link rel="stylesheet" href="/assets/css/framework.css">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/figma-enhanced.css">
+  
+  <!-- Google Fonts for enhanced typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Fallback / critical styles -->
   <style>

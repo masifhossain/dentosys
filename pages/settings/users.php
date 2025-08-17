@@ -90,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  * ------------------------------------------------------------ */
 $users = $conn->query(
   "SELECT u.*, r.role_name
-   FROM UserTbl u
-   JOIN Role r ON r.role_id = u.role_id
+   FROM usertbl u
+   JOIN role r ON r.role_id = u.role_id
    ORDER BY u.user_id"
 );
 
