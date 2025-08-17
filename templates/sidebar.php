@@ -44,21 +44,24 @@ $active  = fn(string $sub) =>
   </p>
 
   <nav>
-    <a <?= $active('/dashboard.php');   ?> href="/pages/dashboard.php">Dashboard</a>
-    <a <?= $active('/patients');        ?> href="/pages/patients/list.php">Patients</a>
-    <a <?= $active('/appointments');    ?> href="/pages/appointments/calendar.php">Appointments</a>
-    <a <?= $active('/records');         ?> href="/pages/records/list.php">Clinical&nbsp;Records</a>
+    <a <?= $active('/dashboard.php');   ?> href="/pages/dashboard.php">🏠 Dashboard</a>
+    <a <?= $active('/patients');        ?> href="/pages/patients/list.php">🧑‍⚕️ Patients</a>
+    <a <?= $active('/appointments');    ?> href="/pages/appointments/calendar.php">📅 Appointments</a>
+    <a <?= $active('/records');         ?> href="/pages/records/list.php">📋 Clinical Records</a>
+    <a <?= $active('/billing');         ?> href="/pages/billing/invoices.php">💰 Billing</a>
 
     <?php if ($roleID !== 3): /* Receptionist hidden */ ?>
-      <a <?= $active('/reports');       ?> href="/pages/reports/financial.php">Reports</a>
-      <a <?= $active('/communications');?> href="/pages/communications/templates.php">Communications</a>
+      <a <?= $active('/reports');       ?> href="/pages/reports/financial.php">📊 Reports</a>
+      <a <?= $active('/communications');?> href="/pages/communications/templates.php">💬 Communications</a>
     <?php endif; ?>
 
     <?php if ($roleID === 1): /* Admin only */ ?>
-      <a <?= $active('/settings');      ?> href="/pages/settings/clinic_info.php">Settings</a>
+      <a <?= $active('/settings');      ?> href="/pages/settings/clinic_info.php">⚙️ Settings</a>
     <?php endif; ?>
 
+    <a <?= $active('/help');            ?> href="/pages/help.php">❓ Help & Support</a>
+
     <hr style="border-color:#226;">
-    <a href="/auth/logout.php">Logout</a>
+    <a href="/auth/logout.php">🚪 Logout</a>
   </nav>
 </aside>

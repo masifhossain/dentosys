@@ -60,7 +60,8 @@ include BASE_PATH . '/templates/sidebar.php';
     </label>
     <button type="submit">Filter</button>
     <a class="btn" href="list.php">Reset</a>
-    <a class="btn" style="float:right;" href="add_note.php">+ Add Note</a>
+    <a class="btn" style="float:right; margin-left:10px;" href="add_note.php">+ Add Note</a>
+    <a class="btn" style="float:right;" href="prescriptions.php">📋 Prescriptions</a>
   </form>
 
   <!-- Records table -->
