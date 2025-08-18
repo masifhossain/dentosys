@@ -184,7 +184,7 @@ Solution: Check MySQL service is running and credentials in includes/db.php
 #### Login Not Working
 ```
 Default credentials: admin@dentosys.local / password
-Reset: Use test_db.php to verify database connection
+Reset: Use reset_password.php to reset admin password
 ```
 
 #### File Upload Issues

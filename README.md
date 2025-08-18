@@ -1,91 +1,216 @@
-# DentoSys
+# 🦷 DentoSys v2.0 - Enhanced Dental Practice Management System
 
-DentoSys is a web-based application designed to help dental businesses digitize and streamline their operations. Built with PHP, HTML, JavaScripy (maybe) and CSS, and utilizing a MariaDB database, DentoSys aims to provide an efficient solution for managing various aspects of a dental practice.
+DentoSys is a comprehensive web-based dental practice management system designed to digitize and streamline dental operations. Built with modern PHP, enhanced CSS framework, and MariaDB database, DentoSys provides a professional solution for managing all aspects of a dental practice.
 
-## Features
+## ✨ Enhanced Features v2.0
 
-* **Patient Management:** Securely store and manage patient information.
+### 🎨 **Modern User Interface**
+* **Enhanced Dashboard** - Beautiful card-based layout with KPIs, quick actions, and organized sections
+* **Responsive Design** - Optimized for desktop, tablet, and mobile devices
+* **Professional Styling** - Modern CSS framework with hover effects and smooth transitions
 
-* **Appointment Scheduling:** Efficiently schedule, view, and modify patient appointments.
+### 👥 **Comprehensive User Management**
+* **Role-Based Access Control** - Admin, Dentist, Receptionist, and Patient roles
+* **Staff Account Creation** - Admin can create dentist and receptionist accounts
+* **User Profile Management** - Complete profiles with specializations and contact details
+* **Secure Authentication** - Password hashing and session management
 
-* **Treatment Records:** Keep detailed records of treatments and procedures.
+### 📋 **Patient Management**
+* **Enhanced Patient List** - Modern card-based layout with search and filtering
+* **Complete Patient Profiles** - Medical history, contact information, and treatment records
+* **Patient Registration** - Streamlined patient onboarding process
 
-* **Billing & Invoicing:** Generate and manage invoices for services rendered.
+### 📅 **Appointment System**
+* **Calendar Interface** - Visual appointment scheduling and management
+* **Booking System** - Easy appointment booking with time slot management
+* **Appointment Status** - Pending approvals and confirmation system
 
-* **Reporting:** Basic reporting functionalities to track business performance.
+### 💰 **Billing & Financial Management**
+* **Invoice Generation** - Professional invoice creation and management
+* **Payment Processing** - Payment tracking and receipt generation
+* **Insurance Claims** - Insurance claim submission and tracking
 
-* **User Authentication:** Secure login for different roles within the practice.
+### 📊 **Reports & Analytics**
+* **Financial Reports** - Revenue tracking and financial summaries
+* **Operational Reports** - Appointment statistics and practice metrics
+* **Audit Logs** - System activity tracking and compliance
 
-## Technologies Used
+### ⚙️ **Settings & Administration**
+* **Settings Hub** - Centralized admin control panel
+* **Clinic Information** - Practice details and configuration
+* **System Integrations** - Third-party service connections
+* **User Role Management** - Permission and access control
 
-* **Backend:** PHP
+## 🛠️ Technologies Used
 
-* **Frontend:** HTML, CSS, JS (maybe)
+* **Backend:** PHP 8.2+ with modern practices
+* **Frontend:** Enhanced CSS Framework, HTML5, JavaScript
+* **Database:** MariaDB/MySQL with optimized schema
+* **Architecture:** MVC pattern with role-based access control
 
-* **Database:** MariaDB
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+## 🚀 Quick Start Guide
 
 ### Prerequisites
 
-You will need the following installed on your system:
+* **PHP:** Version 8.0 or higher
+* **MariaDB/MySQL:** Version 10.4 or higher
+* **Web Server:** Apache/Nginx or PHP built-in server
 
-* **PHP:** Version 7.4 or higher.
+### 📦 Installation Steps
 
-* **MariaDB:** Version 10.x or higher.
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/masifhossain/dentosys
+   cd dentosys
+   ```
 
-### Manual Installation Steps
+2. **Database Setup:**
+   ```bash
+   # Using PowerShell (Recommended)
+   .\database\import.ps1
+   
+   # Or manually
+   mysql -u root -p
+   CREATE DATABASE dentosys_db;
+   USE dentosys_db;
+   SOURCE database/dentosys_db.sql;
+   ```
 
-1.  **Clone the Repository:**
+3. **Configure Database Connection:**
+   Edit `includes/db.php` with your database credentials:
+   ```php
+   define('DB_HOST', 'localhost');
+   define('DB_USER', 'root');
+   define('DB_PASS', 'your_password');
+   define('DB_NAME', 'dentosys_db');
+   ```
 
-    ```
-    git clone https://github.com/masifhossain/dentosys
-    cd DentoSys
-    ```
+4. **Start the Application:**
+   ```bash
+   # PHP Development Server
+   php -S localhost:8000
+   
+   # Or use XAMPP/WAMP
+   # Place in htdocs and visit http://localhost/dentosys
+   ```
 
-2.  **Database Setup:**
+5. **Access the System:**
+   - **URL:** http://localhost:8000
+   - **Admin Login:** admin@dentosys.local / password
 
-    * Log in to your MariaDB server using `mariadb -u root -p`.
+## 👤 Default User Accounts
 
-    * Create a new database for DentoSys:
+| Role | Email | Password | Access Level |
+|------|-------|----------|--------------|
+| **Admin** | admin@dentosys.local | password | Full system access |
+| **Dentist** | s.williams@dentosys.local | password | Clinical + Patient management |
+| **Dentist** | j.chen@dentosys.local | password | Clinical + Patient management |
+| **Receptionist** | reception@dentosys.local | password | Appointments + Basic patient info |
 
-        ```
-        CREATE DATABASE dentosys_db;
-        ```
+## 📁 Project Structure
 
-    * Import the initial database schema (and any seed data) from the `database/schema.sql` file (or similar, depending on your project structure):
+```
+dentosys/
+├── assets/                 # CSS, JS, Images
+│   ├── css/
+│   │   ├── framework.css   # Enhanced CSS framework
+│   │   └── style.css       # Additional styling
+│   ├── js/
+│   └── images/
+├── auth/                   # Authentication
+│   ├── login.php
+│   ├── logout.php
+│   └── register.php
+├── database/               # Database files
+│   ├── dentosys_db.sql     # Database schema
+│   └── import.ps1          # Import script
+├── includes/               # Core includes
+│   ├── db.php              # Database connection
+│   ├── functions.php       # Helper functions
+│   └── auth_middleware.php # Authentication
+├── pages/                  # Application pages
+│   ├── dashboard.php       # Enhanced dashboard
+│   ├── patients/           # Patient management
+│   ├── appointments/       # Appointment system
+│   ├── billing/            # Billing & payments
+│   ├── records/            # Clinical records
+│   ├── communications/     # Messages & feedback
+│   ├── reports/            # Analytics & reports
+│   └── settings/           # Admin settings
+├── templates/              # UI templates
+│   ├── header.php
+│   ├── sidebar.php
+│   └── footer.php
+└── uploads/                # File uploads
+```
 
-        ```
-        mariadb -u your_db_user -p dentosys_db < database/dentosys_db.sql
-        ```
+## 🔧 Administration
 
-3.  **Configure Database Connection:**
+### Creating Staff Accounts
+1. Login as Admin
+2. Navigate to **Settings → Users**
+3. Click **"Add New User"**
+4. Fill in user details and assign role (Dentist/Receptionist)
+5. User can login with provided credentials
 
-    * Locate the database configuration file (`includes/db.php`).
+### System Configuration
+- **Clinic Information:** Settings → Clinic Info
+- **User Roles:** Settings → Roles
+- **Integrations:** Settings → Integrations
 
-    * Update the credentials to match your MariaDB setup:
+## 📱 Features Overview
 
-        ```
-        // Example 
-        define('DB_HOST', 'localhost');
-        define('DB_USER', 'your_db_user');
-        define('DB_PASS', 'your_db_password');
-        define('DB_NAME', 'dentosys_db');
-        ```
+### Dashboard
+- **KPI Cards:** Patient count, appointments, revenue tracking
+- **Quick Actions:** Direct access to common tasks
+- **Today's Schedule:** Current day appointments
+- **Recent Patients:** Latest patient registrations
 
-4.  **Run the PHP Development Server:**
+### Patient Management
+- **Enhanced List View:** Card-based layout with search/filter
+- **Complete Profiles:** Medical history, contact details
+- **Treatment History:** Comprehensive treatment records
 
-    * Navigate to the root directory of the `DentoSys` project in your terminal.
+### Appointments
+- **Calendar View:** Visual scheduling interface
+- **Booking System:** Time slot management
+- **Status Tracking:** Pending, confirmed, completed appointments
 
-    * Start the PHP built-in web server:
+## 🛡️ Security Features
 
-        ```
-        php -S localhost:8000
-        ```
+- **Password Hashing:** Secure bcrypt password storage
+- **Role-Based Access:** Granular permission system
+- **Session Management:** Secure session handling
+- **SQL Injection Protection:** Prepared statements
 
-5.  **Access the Application:**
+## 📋 Requirements
 
-    * Open your web browser and navigate to `http://localhost:8000`.
+- **Server:** Apache/Nginx or PHP built-in server
+- **PHP:** 8.0+ with MySQLi extension
+- **Database:** MySQL 5.7+ or MariaDB 10.4+
+- **Storage:** 100MB+ for application files
+- **Memory:** 512MB+ PHP memory limit recommended
+
+## 🔗 Additional Resources
+
+- **Setup Guide:** [SETUP_GUIDE.md](SETUP_GUIDE.md)
+- **Login Instructions:** [LOGIN_GUIDE.md](LOGIN_GUIDE.md)
+- **Design Assets:** [designs/](designs/) folder
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit changes (`git commit -am 'Add new feature'`)
+4. Push to branch (`git push origin feature/new-feature`)
+5. Create a Pull Request
+
+---
+
+**DentoSys v2.0** - Professional Dental Practice Management System  
+*Built with ❤️ for dental professionals*
 

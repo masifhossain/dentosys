@@ -1,8 +1,8 @@
 <?php
 /*****************************************************************
- * pages/settings/integrations_enhanced.php
+ * pages/settings/integrations.php
  * ---------------------------------------------------------------
- * Enhanced integration management with multiple providers
+ * Integration management with multiple providers
  *****************************************************************/
 require_once dirname(__DIR__, 2) . '/includes/db.php';
 require_once BASE_PATH . '/includes/functions.php';
@@ -12,7 +12,7 @@ require_login();
 /* ───────── Admin-only access ───────── */
 if (!is_admin()) {
     flash('Integration settings are restricted to administrators.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* ───────── Create Integration settings table ───────── */
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             flash('Error: ' . $conn->error, 'error');
         }
-        redirect('integrations_enhanced.php');
+        redirect('integrations.php');
     }
     
     if ($action === 'test_integration') {
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flash($test_result['success'] ? 'Integration test successful!' : 'Integration test failed: ' . $test_result['message'], 
                   $test_result['success'] ? 'success' : 'error');
         }
-        redirect('integrations_enhanced.php');
+        redirect('integrations.php');
     }
 }
 

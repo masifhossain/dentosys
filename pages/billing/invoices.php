@@ -15,7 +15,7 @@ require_login();
  */
 if (!is_admin() && ($_SESSION['role'] ?? 0) !== 3) {
     flash('You do not have permission to manage invoices.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* ───────── Handle status toggle ───────── */

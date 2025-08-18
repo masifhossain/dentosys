@@ -29,7 +29,7 @@ function get_flash(): string {
 /* ───────── Authentication gate ───────── */
 function require_login(): void {
     if (empty($_SESSION['user_id'])) {
-        redirect('/auth/login.php');
+        redirect('/dentosys/auth/login.php');
     }
 }
 

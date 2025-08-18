@@ -44,24 +44,34 @@ $active  = fn(string $sub) =>
   </p>
 
   <nav>
-    <a <?= $active('/dashboard.php');   ?> href="/pages/dashboard.php">🏠 Dashboard</a>
-    <a <?= $active('/patients');        ?> href="/pages/patients/list.php">🧑‍⚕️ Patients</a>
-    <a <?= $active('/appointments');    ?> href="/pages/appointments/calendar.php">📅 Appointments</a>
-    <a <?= $active('/records');         ?> href="/pages/records/list.php">📋 Clinical Records</a>
-    <a <?= $active('/billing');         ?> href="/pages/billing/invoices.php">💰 Billing</a>
+    <?php if ($roleID === 4): /* Patient portal */ ?>
+      <a <?= $active('/dashboard');       ?> href="/dentosys/pages/patients/my_profile.php">👤 My Profile</a>
+      <a <?= $active('/appointments');    ?> href="/dentosys/pages/patients/my_appointments.php">📅 My Appointments</a>
+      <a <?= $active('/records');         ?> href="/dentosys/pages/patients/my_records.php">📋 My Records</a>
+      <a <?= $active('/prescriptions');   ?> href="/dentosys/pages/patients/my_prescriptions.php">💊 My Prescriptions</a>
+      <a <?= $active('/billing');         ?> href="/dentosys/pages/patients/my_billing.php">💰 My Bills</a>
+      <a <?= $active('/book');            ?> href="/dentosys/pages/patients/book_appointment.php">➕ Book Appointment</a>
+    <?php else: /* Staff portal */ ?>
+      <a <?= $active('/dashboard.php');   ?> href="/dentosys/pages/dashboard.php">🏠 Dashboard</a>
+      <a <?= $active('/patients');        ?> href="/dentosys/pages/patients/list.php">🧑‍⚕️ Patients</a>
+      <a <?= $active('/appointments');    ?> href="/dentosys/pages/appointments/calendar.php">📅 Appointments</a>
+      <a <?= $active('/records');         ?> href="/dentosys/pages/records/list.php">📋 Clinical Records</a>
+      <a <?= $active('/billing');         ?> href="/dentosys/pages/billing/invoices.php">💰 Billing</a>
 
-    <?php if ($roleID !== 3): /* Receptionist hidden */ ?>
-      <a <?= $active('/reports');       ?> href="/pages/reports/financial.php">📊 Reports</a>
-      <a <?= $active('/communications');?> href="/pages/communications/templates.php">💬 Communications</a>
+      <?php if ($roleID !== 3): /* Receptionist hidden */ ?>
+        <a <?= $active('/reports');       ?> href="/dentosys/pages/reports/financial.php">📊 Reports</a>
+        <a <?= $active('/communications');?> href="/dentosys/pages/communications/templates.php">💬 Communications</a>
+      <?php endif; ?>
+
+      <?php if ($roleID === 1): /* Admin only */ ?>
+        <a <?= $active('/settings');      ?> href="/dentosys/pages/settings/index.php">⚙️ Settings</a>
+        <a <?= $active('/users');         ?> href="/dentosys/pages/settings/users.php">👥 Staff Management</a>
+      <?php endif; ?>
     <?php endif; ?>
 
-    <?php if ($roleID === 1): /* Admin only */ ?>
-      <a <?= $active('/settings');      ?> href="/pages/settings/clinic_info.php">⚙️ Settings</a>
-    <?php endif; ?>
-
-    <a <?= $active('/help');            ?> href="/pages/help.php">❓ Help & Support</a>
+    <a <?= $active('/help');            ?> href="/dentosys/pages/help.php">❓ Help & Support</a>
 
     <hr style="border-color:#226;">
-    <a href="/auth/logout.php">🚪 Logout</a>
+    <a href="/dentosys/auth/logout.php">🚪 Logout</a>
   </nav>
 </aside>

@@ -13,7 +13,7 @@ require_login();
 /* ───────── Allow admins only ───────── */
 if (!is_admin()) {
     flash('Clinic settings are restricted to administrators.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* ───────── Ensure settings row exists (singleton pattern) ───────── */

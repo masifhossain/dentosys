@@ -16,9 +16,8 @@ $pageTitle = $pageTitle ?? 'DentoSys';
   <title><?= htmlspecialchars($pageTitle); ?></title>
 
   <!-- Main stylesheets -->
-  <link rel="stylesheet" href="/assets/css/framework.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/figma-enhanced.css">
+  <link rel="stylesheet" href="/dentosys/assets/css/framework.css">
+  <link rel="stylesheet" href="/dentosys/assets/css/style.css">
   
   <!-- Google Fonts for enhanced typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

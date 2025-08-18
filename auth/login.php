@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role']    = $row['role_id'];
         $_SESSION['username'] = $row['username'] ?? $row['email'];
         flash('Welcome back!');
-        redirect('/pages/dashboard.php');
+        redirect('../pages/dashboard.php');
     } else {
         flash('Invalid credentials.');
     }
@@ -28,12 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="utf-8">
   <title>DentoSys · Sign In</title>
-  <link rel="stylesheet" href="/assets/css/framework.css">
-  <link rel="stylesheet" href="/assets/css/figma-enhanced.css">
+  <link rel="stylesheet" href="../assets/css/framework.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --figma-primary: #0066CC;
+      --figma-primary-dark: #0052A3;
+      --figma-text-primary: #1F2937;
+      --figma-text-secondary: #6B7280;
+      --figma-font-heading: 'Poppins', sans-serif;
+      --figma-font-body: 'Inter', sans-serif;
+    }
+    
     body {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
@@ -107,14 +116,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     .form-input {
       width: 100%;
-      padding: 16px;
-      font-size: 16px;
+      padding: 22px 24px;
+      font-size: 18px;
       border: 2px solid #E5E7EB;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       transition: all 0.3s ease;
       font-family: var(--figma-font-body);
       box-sizing: border-box;
+      min-height: 70px;
+      display: block;
     }
     
     .form-input:focus {
@@ -127,8 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     .login-btn {
       width: 100%;
-      padding: 16px;
-      font-size: 16px;
+      padding: 22px 24px;
+      font-size: 18px;
       font-weight: 600;
       background: linear-gradient(135deg, var(--figma-primary) 0%, var(--figma-primary-dark) 100%);
       color: white;
@@ -139,6 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       margin-top: 8px;
       position: relative;
       overflow: hidden;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
     }
     
     .login-btn::before {
@@ -305,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
   <div class="login-container">
     <div class="logo-section">
-      <img src="/assets/images/DentoSys_Logo.png" alt="DentoSys logo">
+      <img src="/dentosys/assets/images/DentoSys_Logo.png" alt="DentoSys logo">
       <h1 class="welcome-text">Welcome Back</h1>
       <p class="welcome-subtitle">Sign in to your dental practice</p>
     </div>

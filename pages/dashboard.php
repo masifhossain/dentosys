@@ -157,7 +157,7 @@ include BASE_PATH . '/templates/header.php';
 include BASE_PATH . '/templates/sidebar.php';
 ?>
 
-<div class="main-content-enhanced">
+<main class="main-content-enhanced">
     <!-- Header Section -->
     <div class="content-header">
         <h1>📊 Dashboard</h1>
@@ -167,162 +167,185 @@ include BASE_PATH . '/templates/sidebar.php';
     </div>
 
     <div class="content-body">
-        <!-- Quick Actions Bar -->
-        <div class="card-enhanced" style="margin-bottom: 30px;">
-            <div class="card-body" style="padding: 20px;">
-                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                    <a href="<?= BASE_URL; ?>/pages/appointments/book.php" class="btn-primary-enhanced">
-                        📅 Book Appointment
-                    </a>
-                    <a href="<?= BASE_URL; ?>/pages/patients/add.php" class="btn-secondary-enhanced">
-                        👤 Add Patient
-                    </a>
-                    <a href="<?= BASE_URL; ?>/pages/billing/invoices.php" class="btn-secondary-enhanced">
-                        💰 Create Invoice
-                    </a>
-                    <a href="<?= BASE_URL; ?>/pages/records/add_prescription.php" class="btn-secondary-enhanced">
-                        💊 New Prescription
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- KPI Stats Grid -->
-        <div class="grid grid-cols-4 gap-4" style="margin-bottom: 30px;">
-            <!-- Today's Appointments -->
-            <div class="stats-card">
-                <div class="stats-icon">📅</div>
-                <div class="stats-value"><?= $apptsToday; ?></div>
-                <div class="stats-label">Today's Appointments</div>
-                <?php if ($apptGrowth != 0): ?>
-                    <div style="margin-top: 8px; font-size: 12px; color: <?= $apptGrowth > 0 ? '#10B981' : '#EF4444'; ?>;">
-                        <?= $apptGrowth > 0 ? '↗' : '↘'; ?> <?= abs($apptGrowth); ?>% vs yesterday
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Total Patients -->
-            <div class="stats-card">
-                <div class="stats-icon">👥</div>
-                <div class="stats-value"><?= $totalPatients; ?></div>
-                <div class="stats-label">Total Patients</div>
-                <div style="margin-top: 8px; font-size: 12px; color: #64748B;">
-                    +<?= $newPatientsMonth; ?> this month
-                </div>
-            </div>
-
-            <!-- Monthly Revenue -->
-            <div class="stats-card">
-                <div class="stats-icon">💰</div>
-                <div class="stats-value">$<?= number_format($monthlyRevenue, 0); ?></div>
-                <div class="stats-label">Monthly Revenue</div>
-                <?php if ($revenueGrowth != 0): ?>
-                    <div style="margin-top: 8px; font-size: 12px; color: <?= $revenueGrowth > 0 ? '#10B981' : '#EF4444'; ?>;">
-                        <?= $revenueGrowth > 0 ? '↗' : '↘'; ?> <?= abs($revenueGrowth); ?>% vs last month
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Outstanding Invoices -->
-            <div class="stats-card">
-                <div class="stats-icon">⚠️</div>
-                <div class="stats-value"><?= $outstanding['cnt']; ?></div>
-                <div class="stats-label">Outstanding Invoices</div>
-                <div style="margin-top: 8px; font-size: 12px; color: #F59E0B;">
-                    $<?= number_format($outstanding['amt'], 0); ?> pending
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content Grid -->
-        <div class="grid grid-cols-2 gap-4">
-            <!-- Today's Schedule -->
-            <div class="card-enhanced">
+        <!-- Quick Actions Section -->
+        <div class="dashboard-section">
+            <div class="card-enhanced" style="margin-bottom: 20px;">
                 <div class="card-header">
-                    <h3>📅 Today's Schedule</h3>
+                    <h3>🚀 Quick Actions</h3>
                 </div>
-                <div class="card-body">
-                    <?php if ($nextAppts->num_rows === 0): ?>
-                        <div style="text-align: center; padding: 40px 20px; color: #64748B;">
-                            <div style="font-size: 48px; margin-bottom: 16px;">🗓️</div>
-                            <p>No appointments scheduled for today</p>
-                            <a href="<?= BASE_URL; ?>/pages/appointments/book.php" class="btn-primary-enhanced" style="margin-top: 16px;">
-                                Book First Appointment
-                            </a>
+                <div class="card-body" style="padding: 24px;">
+                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <a href="<?= BASE_URL; ?>/pages/appointments/book.php" class="btn-primary-enhanced">
+                            📅 Book Appointment
+                        </a>
+                        <a href="<?= BASE_URL; ?>/pages/patients/add.php" class="btn-secondary-enhanced">
+                            👤 Add Patient
+                        </a>
+                        <a href="<?= BASE_URL; ?>/pages/billing/invoices.php" class="btn-secondary-enhanced">
+                            💰 Create Invoice
+                        </a>
+                        <a href="<?= BASE_URL; ?>/pages/records/add_prescription.php" class="btn-secondary-enhanced">
+                            💊 New Prescription
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Stats Section -->
+        <div class="dashboard-section">
+            <div class="card-enhanced" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <h3>📊 Key Performance Indicators</h3>
+                </div>
+                <div class="card-body" style="padding: 24px;">
+                    <div class="grid grid-cols-4 gap-4">
+                        <!-- Today's Appointments -->
+                        <div class="stats-card">
+                            <div class="stats-icon">📅</div>
+                            <div class="stats-value"><?= $apptsToday; ?></div>
+                            <div class="stats-label">Today's Appointments</div>
+                            <?php if ($apptGrowth != 0): ?>
+                                <div style="margin-top: 8px; font-size: 12px; color: <?= $apptGrowth > 0 ? '#10B981' : '#EF4444'; ?>;">
+                                    <?= $apptGrowth > 0 ? '↗' : '↘'; ?> <?= abs($apptGrowth); ?>% vs yesterday
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    <?php else: ?>
-                        <div style="space-y: 16px;">
-                            <?php while ($appt = $nextAppts->fetch_assoc()): ?>
-                                <div style="display: flex; align-items: center; padding: 16px; background: #F8FAFC; border-radius: 8px; margin-bottom: 12px;">
-                                    <div style="font-weight: 600; color: #0066CC; margin-right: 16px; min-width: 60px;">
-                                        <?= $appt['atime']; ?>
+
+                        <!-- Total Patients -->
+                        <div class="stats-card">
+                            <div class="stats-icon">👥</div>
+                            <div class="stats-value"><?= $totalPatients; ?></div>
+                            <div class="stats-label">Total Patients</div>
+                            <div style="margin-top: 8px; font-size: 12px; color: #64748B;">
+                                +<?= $newPatientsMonth; ?> this month
+                            </div>
+                        </div>
+
+                        <!-- Monthly Revenue -->
+                        <div class="stats-card">
+                            <div class="stats-icon">💰</div>
+                            <div class="stats-value">$<?= number_format($monthlyRevenue, 0); ?></div>
+                            <div class="stats-label">Monthly Revenue</div>
+                            <?php if ($revenueGrowth != 0): ?>
+                                <div style="margin-top: 8px; font-size: 12px; color: <?= $revenueGrowth > 0 ? '#10B981' : '#EF4444'; ?>;">
+                                    <?= $revenueGrowth > 0 ? '↗' : '↘'; ?> <?= abs($revenueGrowth); ?>% vs last month
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Outstanding Invoices -->
+                        <div class="stats-card">
+                            <div class="stats-icon">⚠️</div>
+                            <div class="stats-value"><?= $outstanding['cnt']; ?></div>
+                            <div class="stats-label">Outstanding Invoices</div>
+                            <div style="margin-top: 8px; font-size: 12px; color: #F59E0B;">
+                                $<?= number_format($outstanding['amt'], 0); ?> pending
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="dashboard-section">
+            <div class="card-enhanced" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <h3>📋 Today's Overview</h3>
+                </div>
+                <div class="card-body" style="padding: 24px;">
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Today's Schedule -->
+                        <div class="inner-card">
+                            <div class="inner-card-header">
+                                <h4>📅 Today's Schedule</h4>
+                            </div>
+                            <div class="inner-card-body">
+                                <?php if ($nextAppts->num_rows === 0): ?>
+                                    <div style="text-align: center; padding: 40px 20px; color: #64748B;">
+                                        <div style="font-size: 48px; margin-bottom: 16px;">🗓️</div>
+                                        <p>No appointments scheduled for today</p>
+                                        <a href="<?= BASE_URL; ?>/pages/appointments/book.php" class="btn-primary-enhanced" style="margin-top: 16px;">
+                                            Book First Appointment
+                                        </a>
                                     </div>
-                                    <div style="flex: 1;">
-                                        <div style="font-weight: 500; color: #1E293B;">
-                                            <?= htmlspecialchars($appt['patient']); ?>
-                                        </div>
-                                        <?php if ($appt['dentist_name']): ?>
-                                            <div style="font-size: 12px; color: #64748B;">
-                                                Dr. <?= htmlspecialchars($appt['dentist_name']); ?>
+                                <?php else: ?>
+                                    <div style="space-y: 16px;">
+                                        <?php while ($appt = $nextAppts->fetch_assoc()): ?>
+                                            <div style="display: flex; align-items: center; padding: 16px; background: #F8FAFC; border-radius: 8px; margin-bottom: 12px;">
+                                                <div style="font-weight: 600; color: #0066CC; margin-right: 16px; min-width: 60px;">
+                                                    <?= $appt['atime']; ?>
+                                                </div>
+                                                <div style="flex: 1;">
+                                                    <div style="font-weight: 500; color: #1E293B;">
+                                                        <?= htmlspecialchars($appt['patient']); ?>
+                                                    </div>
+                                                    <?php if ($appt['dentist_name']): ?>
+                                                        <div style="font-size: 12px; color: #64748B;">
+                                                            Dr. <?= htmlspecialchars($appt['dentist_name']); ?>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <span class="badge-enhanced badge-<?= $appt['status'] === 'Approved' ? 'success' : 'warning'; ?>-enhanced">
+                                                    <?= $appt['status']; ?>
+                                                </span>
                                             </div>
-                                        <?php endif; ?>
+                                        <?php endwhile; ?>
                                     </div>
-                                    <span class="badge-enhanced badge-<?= $appt['status'] === 'Approved' ? 'success' : 'warning'; ?>-enhanced">
-                                        <?= $appt['status']; ?>
-                                    </span>
-                                </div>
-                            <?php endwhile; ?>
+                                    <div style="text-align: center; margin-top: 20px;">
+                                        <a href="<?= BASE_URL; ?>/pages/appointments/calendar.php" class="btn-secondary-enhanced">
+                                            View Full Calendar
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                        <div style="text-align: center; margin-top: 20px;">
-                            <a href="<?= BASE_URL; ?>/pages/appointments/calendar.php" class="btn-secondary-enhanced">
-                                View Full Calendar
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
 
-            <!-- Recent Patients -->
-            <div class="card-enhanced">
-                <div class="card-header">
-                    <h3>👥 Recent Patients</h3>
-                </div>
-                <div class="card-body">
-                    <?php if ($recentPatients->num_rows === 0): ?>
-                        <div style="text-align: center; padding: 40px 20px; color: #64748B;">
-                            <div style="font-size: 48px; margin-bottom: 16px;">👤</div>
-                            <p>No patients registered yet</p>
-                            <a href="<?= BASE_URL; ?>/pages/patients/add.php" class="btn-primary-enhanced" style="margin-top: 16px;">
-                                Add First Patient
-                            </a>
-                        </div>
-                    <?php else: ?>
-                        <div style="space-y: 12px;">
-                            <?php while ($patient = $recentPatients->fetch_assoc()): ?>
-                                <div style="display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #F3F4F6;">
-                                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0066CC, #004A99); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 12px;">
-                                        <?= strtoupper(substr($patient['name'], 0, 1)); ?>
+                        <!-- Recent Patients -->
+                        <div class="inner-card">
+                            <div class="inner-card-header">
+                                <h4>👥 Recent Patients</h4>
+                            </div>
+                            <div class="inner-card-body">
+                                <?php if ($recentPatients->num_rows === 0): ?>
+                                    <div style="text-align: center; padding: 40px 20px; color: #64748B;">
+                                        <div style="font-size: 48px; margin-bottom: 16px;">👤</div>
+                                        <p>No patients registered yet</p>
+                                        <a href="<?= BASE_URL; ?>/pages/patients/add.php" class="btn-primary-enhanced" style="margin-top: 16px;">
+                                            Add First Patient
+                                        </a>
                                     </div>
-                                    <div style="flex: 1;">
-                                        <div style="font-weight: 500; color: #1E293B;">
-                                            <?= htmlspecialchars($patient['name']); ?>
-                                        </div>
-                                        <div style="font-size: 12px; color: #64748B;">
-                                            Joined <?= $patient['joined_date']; ?>
-                                        </div>
+                                <?php else: ?>
+                                    <div style="space-y: 12px;">
+                                        <?php while ($patient = $recentPatients->fetch_assoc()): ?>
+                                            <div style="display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #F3F4F6;">
+                                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0066CC, #004A99); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 12px;">
+                                                    <?= strtoupper(substr($patient['name'], 0, 1)); ?>
+                                                </div>
+                                                <div style="flex: 1;">
+                                                    <div style="font-weight: 500; color: #1E293B;">
+                                                        <?= htmlspecialchars($patient['name']); ?>
+                                                    </div>
+                                                    <div style="font-size: 12px; color: #64748B;">
+                                                        Joined <?= $patient['joined_date']; ?>
+                                                    </div>
+                                                </div>
+                                                <div style="font-size: 12px; color: #64748B;">
+                                                    <?= htmlspecialchars($patient['phone']); ?>
+                                                </div>
+                                            </div>
+                                        <?php endwhile; ?>
                                     </div>
-                                    <div style="font-size: 12px; color: #64748B;">
-                                        <?= htmlspecialchars($patient['phone']); ?>
+                                    <div style="text-align: center; margin-top: 20px;">
+                                        <a href="<?= BASE_URL; ?>/pages/patients/list.php" class="btn-secondary-enhanced">
+                                            View All Patients
+                                        </a>
                                     </div>
-                                </div>
-                            <?php endwhile; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                        <div style="text-align: center; margin-top: 20px;">
-                            <a href="<?= BASE_URL; ?>/pages/patients/list.php" class="btn-secondary-enhanced">
-                                View All Patients
-                            </a>
-                        </div>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -390,7 +413,7 @@ include BASE_PATH . '/templates/sidebar.php';
                     </div>
                     
                     <div style="margin-top: 20px; text-align: center;">
-                        <a href="<?= BASE_URL; ?>/pages/settings/integrations_enhanced.php" class="btn-secondary-enhanced">
+                        <a href="<?= BASE_URL; ?>/pages/settings/integrations.php" class="btn-secondary-enhanced">
                             Manage Settings
                         </a>
                     </div>
@@ -425,9 +448,35 @@ include BASE_PATH . '/templates/sidebar.php';
             </div>
         </div>
     </div>
-</div>
+</main>
 
 <style>
+/* Enhanced Dashboard Specific Styles */
+main.main-content-enhanced {
+    flex: 1;
+    padding: 0;
+    background: #f8fafc;
+    margin: 0;
+    overflow-x: auto;
+}
+
+/* Override default main padding for dashboard */
+body:has(main.main-content-enhanced) main {
+    padding: 0;
+}
+
+/* Make sure footer is positioned correctly */
+body:has(main.main-content-enhanced) .site-footer {
+    left: 200px;
+    width: calc(100% - 200px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-cols-3 { grid-template-columns: repeat(1, 1fr); }
+    .grid-cols-2 { grid-template-columns: repeat(1, 1fr); }
+}
 /* Responsive grid adjustments */
 @media (max-width: 1200px) {
     .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
@@ -447,6 +496,16 @@ include BASE_PATH . '/templates/sidebar.php';
     .content-header,
     .content-body {
         padding: 16px;
+    }
+    
+    /* Hide sidebar on mobile and adjust layout */
+    body:has(main.main-content-enhanced) .sidebar {
+        display: none;
+    }
+    
+    body:has(main.main-content-enhanced) .site-footer {
+        left: 0;
+        width: 100%;
     }
 }
 

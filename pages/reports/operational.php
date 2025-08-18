@@ -12,7 +12,7 @@ require_login();
 /* ───────── Role restriction - Reports usually for Admin/Management ───────── */
 if (!is_admin() && ($_SESSION['role'] ?? 0) !== 2) { // Admin or Dentist
     flash('You do not have permission to view operational reports.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* ───────── Date range handling ───────── */
