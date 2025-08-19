@@ -84,9 +84,9 @@ include BASE_PATH . '/templates/sidebar.php';
 
   <!-- Links to related modules -->
   <p>
-    <a href="/pages/appointments/calendar.php?patient=<?= $id; ?>">View appointments</a> |
-    <a href="/pages/billing/invoices.php?patient=<?= $id; ?>">View invoices</a> |
-    <a href="/pages/records/list.php?patient=<?= $id; ?>">View clinical records</a>
+    <a href="/dentosys/pages/appointments/calendar.php?patient=<?= $id; ?>">View appointments</a> |
+    <a href="/dentosys/pages/billing/invoices.php?patient=<?= $id; ?>">View invoices</a> |
+    <a href="/dentosys/pages/records/list.php?patient=<?= $id; ?>">View clinical records</a>
   </p>
 </main>
 <?php include BASE_PATH . '/templates/footer.php'; ?>

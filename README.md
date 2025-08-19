@@ -1,5 +1,7 @@
 # 🦷 DentoSys v2.0 - Enhanced Dental Practice Management System
 
+> **Complete Setup & User Guide** - Everything you need to install, configure, and use DentoSys is in this single comprehensive guide.
+
 DentoSys is a comprehensive web-based dental practice management system designed to digitize and streamline dental operations. Built with modern PHP, enhanced CSS framework, and MariaDB database, DentoSys provides a professional solution for managing all aspects of a dental practice.
 
 ## ✨ Enhanced Features v2.0
@@ -96,16 +98,63 @@ DentoSys is a comprehensive web-based dental practice management system designed
 
 5. **Access the System:**
    - **URL:** http://localhost:8000
-   - **Admin Login:** admin@dentosys.local / password
+   - **Alternative:** http://localhost/dentosys (if using XAMPP)
+   - **Admin Login:** admin@dentosys.local / Password
+
+## 🔐 Login & Access
+
+### **Multiple Access Methods:**
+- **PHP Built-in Server:** http://localhost:8000
+- **XAMPP Apache:** http://localhost/dentosys  
+- **Direct File Access:** Navigate to project folder
+
+### **Troubleshooting Login Issues:**
+- **Clear browser cache** and try again
+- **Check PHP server is running:** Look for server startup message
+- **Verify database connection:** Check `includes/db.php` configuration
+- **Reset passwords:** Run `php reset_password.php` to reset all user passwords to "Password"
+
+### **Starting the Server:**
+```powershell
+# Start PHP development server
+php -S localhost:8000
+
+# Reset all user passwords to "Password"
+php reset_password.php
+
+# Import database if needed
+database/import.ps1
+```
 
 ## 👤 Default User Accounts
 
 | Role | Email | Password | Access Level |
 |------|-------|----------|--------------|
-| **Admin** | admin@dentosys.local | password | Full system access |
-| **Dentist** | s.williams@dentosys.local | password | Clinical + Patient management |
-| **Dentist** | j.chen@dentosys.local | password | Clinical + Patient management |
-| **Receptionist** | reception@dentosys.local | password | Appointments + Basic patient info |
+| **Admin** | admin@dentosys.local | Password | Full system access |
+| **Dentist** | s.williams@dentosys.local | Password | Clinical + Patient management |
+| **Dentist** | j.chen@dentosys.local | Password | Clinical + Patient management |
+| **Receptionist** | reception@dentosys.local | Password | Appointments + Basic patient info |
+
+### 🔧 Password Reset Utility
+
+DentoSys includes a convenient password reset utility that updates all user accounts simultaneously:
+
+```powershell
+php reset_password.php
+```
+
+**Features:**
+- ✅ Updates all 4 user accounts at once
+- ✅ Sets password to "Password" for consistency
+- ✅ Includes verification testing
+- ✅ Provides detailed success/failure feedback
+- ✅ Shows login information after completion
+
+**When to Use:**
+- After fresh database import
+- When users forget passwords
+- For testing and development
+- To standardize passwords across accounts
 
 ## 📁 Project Structure
 
@@ -144,7 +193,28 @@ dentosys/
 └── uploads/                # File uploads
 ```
 
-## 🔧 Administration
+## 🎯 Getting Started After Login
+
+### **Admin Portal Capabilities:**
+- ✅ **Enhanced Dashboard** - Beautiful KPI cards, today's schedule, recent patients
+- ✅ **Patient Management** - Modern card-based patient list with advanced search and filtering  
+- ✅ **User Management** - Create dentist and receptionist accounts with role assignment
+- ✅ **Appointment System** - Full calendar view and booking management
+- ✅ **Billing & Payments** - Invoice generation, payment tracking, insurance claims
+- ✅ **Clinical Records** - Medical notes, prescriptions, treatment files
+- ✅ **Communications** - Patient feedback and message templates
+- ✅ **Reports & Analytics** - Financial, operational, and audit reports
+- ✅ **Settings Hub** - Clinic info, user roles, and system integrations
+
+### **Quick Start Workflow:**
+1. **Login** with admin credentials
+2. **Explore Dashboard** - Review system overview and KPIs
+3. **Create Staff Accounts** - Visit Settings → Users to add dentists and receptionists
+4. **Add Patients** - Use the enhanced patient management system
+5. **Schedule Appointments** - Book appointments using the calendar interface
+6. **Configure Settings** - Set up clinic information and preferences
+
+## 🔧 Advanced Administration
 
 ### Creating Staff Accounts
 1. Login as Admin
@@ -193,9 +263,9 @@ dentosys/
 
 ## 🔗 Additional Resources
 
-- **Setup Guide:** [SETUP_GUIDE.md](SETUP_GUIDE.md)
-- **Login Instructions:** [LOGIN_GUIDE.md](LOGIN_GUIDE.md)
-- **Design Assets:** [designs/](designs/) folder
+- **Design Assets:** [designs/](designs/) folder with Figma mockups
+- **Database Schema:** [database/dentosys_db.sql](database/dentosys_db.sql)
+- **Import Scripts:** [database/import.ps1](database/import.ps1) for easy setup
 
 ## 📄 License
 

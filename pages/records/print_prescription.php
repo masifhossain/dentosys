@@ -21,7 +21,7 @@ $sql = "SELECT pr.*,
                p.dob, p.phone, p.address,
                CONCAT(u.email) AS dentist_name,
                d.specialty
-        FROM Prescription pr
+        FROM Prescriptions pr
         JOIN Patient p ON p.patient_id = pr.patient_id
         JOIN Dentist d ON d.dentist_id = pr.dentist_id
         JOIN UserTbl u ON u.user_id = d.user_id

@@ -226,6 +226,7 @@ CREATE TABLE `Invoice` (
   `patient_id` int(11) NOT NULL,
   `issued_date` date NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
+  `description` text DEFAULT NULL,
   `status` enum('Paid','Unpaid') DEFAULT 'Unpaid',
   PRIMARY KEY (`invoice_id`),
   KEY `patient_id` (`patient_id`),
@@ -241,8 +242,8 @@ LOCK TABLES `Invoice` WRITE;
 /*!40000 ALTER TABLE `Invoice` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `Invoice` VALUES
-(1,3,'2025-08-03',250.00,'Paid'),
-(2,1,'2025-07-13',150.00,'Unpaid');
+(1,3,'2025-08-03',250.00,'Dental cleaning, fluoride treatment, and oral examination','Paid'),
+(2,1,'2025-07-13',150.00,'Root canal consultation and X-ray','Unpaid');
 /*!40000 ALTER TABLE `Invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -465,10 +466,10 @@ LOCK TABLES `UserTbl` WRITE;
 /*!40000 ALTER TABLE `UserTbl` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `UserTbl` VALUES
-(1,'admin@dentosys.local','$2y$10$E.V2i0eCg0VvN9aZ3uBwA.xY8QeX2s7z3R/u5i4o6k9q7j8L9m0O',1,1,'2025-08-13 06:22:59'),
-(2,'s.williams@dentosys.local','$2y$10$F.A1b2c3D4e5F6g7H8i9j.kL/mNopQrStUvWxYzAbCdEfGhIjKlM',2,1,'2025-08-13 06:22:59'),
-(3,'j.chen@dentosys.local','$2y$10$F.A1b2c3D4e5F6g7H8i9j.kL/mNopQrStUvWxYzAbCdEfGhIjKlM',2,1,'2025-08-13 06:22:59'),
-(4,'reception@dentosys.local','$2y$10$G.h1i2j3k4l5m6n7o8p9q.rStUvWxYzAbCdEfGhIjKlMnOpQrStU',3,1,'2025-08-13 06:22:59');
+(1,'admin@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',1,1,'2025-08-13 06:22:59'),
+(2,'s.williams@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',2,1,'2025-08-13 06:22:59'),
+(3,'j.chen@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',2,1,'2025-08-13 06:22:59'),
+(4,'reception@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',3,1,'2025-08-13 06:22:59');
 /*!40000 ALTER TABLE `UserTbl` ENABLE KEYS */;
 UNLOCK TABLES;
 

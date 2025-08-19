@@ -21,11 +21,6 @@ require_once BASE_PATH . '/includes/functions.php';
 
 require_login();
 
-// Define BASE_URL if not defined
-if (!defined('BASE_URL')) {
-    define('BASE_URL', '');
-}
-
 /* ───────── Enhanced search and filtering ───────── */
 $where_conditions = [];
 $search = trim($_GET['q'] ?? '');

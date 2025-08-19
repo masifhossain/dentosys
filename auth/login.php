@@ -331,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="demo-credentials">
       <h4>🚀 Demo Credentials</h4>
       <strong>Email:</strong> admin@dentosys.local<br>
-      <strong>Password:</strong> password
+      <strong>Password:</strong> Password
     </div>
     
     <form method="post">
@@ -346,7 +346,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="form-label">Password</label>
         <input type="password" name="password" class="form-input" 
                placeholder="Enter your password" 
-               value="password" required>
+               value="Password" required>
       </div>
       
       <button type="submit" class="login-btn">
@@ -382,7 +382,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         emailInput.value = 'admin@dentosys.local';
       }
       if (passwordInput && !passwordInput.value) {
-        passwordInput.value = 'password';
+        passwordInput.value = 'Password';
       }
     });
   </script>

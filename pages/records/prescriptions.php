@@ -36,10 +36,10 @@ if (isset($_GET['action'], $_GET['id'])) {
     $action = $_GET['action'];
     
     if ($action === 'complete') {
-        $conn->query("UPDATE Prescription SET status='Completed' WHERE prescription_id=$id");
+        $conn->query("UPDATE Prescriptions SET status='Completed' WHERE prescription_id=$id");
         flash('Prescription marked as completed.');
     } elseif ($action === 'cancel') {
-        $conn->query("UPDATE Prescription SET status='Cancelled' WHERE prescription_id=$id");
+        $conn->query("UPDATE Prescriptions SET status='Cancelled' WHERE prescription_id=$id");
         flash('Prescription cancelled.');
     }
     redirect('prescriptions.php');
@@ -60,7 +60,7 @@ if (!empty($_GET['status'])) {
 $sql = "SELECT pr.*, 
                CONCAT(p.first_name, ' ', p.last_name) AS patient_name,
                CONCAT(u.email) AS dentist_name
-        FROM Prescription pr
+        FROM Prescriptions pr
         JOIN Patient p ON p.patient_id = pr.patient_id
         JOIN Dentist d ON d.dentist_id = pr.dentist_id
         JOIN UserTbl u ON u.user_id = d.user_id

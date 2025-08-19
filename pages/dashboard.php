@@ -13,11 +13,6 @@ require_once BASE_PATH . '/includes/functions.php';
 
 require_login();
 
-// Define BASE_URL if not defined
-if (!defined('BASE_URL')) {
-    define('BASE_URL', '');
-}
-
 // Helper function to get user display name
 function get_user_display_name() {
     return $_SESSION['username'] ?? 'User';
@@ -175,16 +170,16 @@ include BASE_PATH . '/templates/sidebar.php';
                 </div>
                 <div class="card-body" style="padding: 24px;">
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                        <a href="<?= BASE_URL; ?>/pages/appointments/book.php" class="btn-primary-enhanced">
+                        <a href="/dentosys/pages/appointments/book.php" class="btn-primary-enhanced">
                             📅 Book Appointment
                         </a>
-                        <a href="<?= BASE_URL; ?>/pages/patients/add.php" class="btn-secondary-enhanced">
+                        <a href="/dentosys/pages/patients/add.php" class="btn-secondary-enhanced">
                             👤 Add Patient
                         </a>
-                        <a href="<?= BASE_URL; ?>/pages/billing/invoices.php" class="btn-secondary-enhanced">
+                        <a href="/dentosys/pages/billing/create_invoice.php" class="btn-secondary-enhanced">
                             💰 Create Invoice
                         </a>
-                        <a href="<?= BASE_URL; ?>/pages/records/add_prescription.php" class="btn-secondary-enhanced">
+                        <a href="/dentosys/pages/records/add_prescription.php" class="btn-secondary-enhanced">
                             💊 New Prescription
                         </a>
                     </div>
@@ -266,7 +261,7 @@ include BASE_PATH . '/templates/sidebar.php';
                                     <div style="text-align: center; padding: 40px 20px; color: #64748B;">
                                         <div style="font-size: 48px; margin-bottom: 16px;">🗓️</div>
                                         <p>No appointments scheduled for today</p>
-                                        <a href="<?= BASE_URL; ?>/pages/appointments/book.php" class="btn-primary-enhanced" style="margin-top: 16px;">
+                                        <a href="/dentosys/pages/appointments/book.php" class="btn-primary-enhanced" style="margin-top: 16px;">
                                             Book First Appointment
                                         </a>
                                     </div>
@@ -294,7 +289,7 @@ include BASE_PATH . '/templates/sidebar.php';
                                         <?php endwhile; ?>
                                     </div>
                                     <div style="text-align: center; margin-top: 20px;">
-                                        <a href="<?= BASE_URL; ?>/pages/appointments/calendar.php" class="btn-secondary-enhanced">
+                                        <a href="/dentosys/pages/appointments/calendar.php" class="btn-secondary-enhanced">
                                             View Full Calendar
                                         </a>
                                     </div>
@@ -312,7 +307,7 @@ include BASE_PATH . '/templates/sidebar.php';
                                     <div style="text-align: center; padding: 40px 20px; color: #64748B;">
                                         <div style="font-size: 48px; margin-bottom: 16px;">👤</div>
                                         <p>No patients registered yet</p>
-                                        <a href="<?= BASE_URL; ?>/pages/patients/add.php" class="btn-primary-enhanced" style="margin-top: 16px;">
+                                        <a href="/dentosys/pages/patients/add.php" class="btn-primary-enhanced" style="margin-top: 16px;">
                                             Add First Patient
                                         </a>
                                     </div>
@@ -338,7 +333,7 @@ include BASE_PATH . '/templates/sidebar.php';
                                         <?php endwhile; ?>
                                     </div>
                                     <div style="text-align: center; margin-top: 20px;">
-                                        <a href="<?= BASE_URL; ?>/pages/patients/list.php" class="btn-secondary-enhanced">
+                                        <a href="/dentosys/pages/patients/list.php" class="btn-secondary-enhanced">
                                             View All Patients
                                         </a>
                                     </div>
@@ -383,7 +378,7 @@ include BASE_PATH . '/templates/sidebar.php';
                             <div style="font-size: 14px; font-weight: 500; color: #92400E;">
                                 💬 <?= $feedbackNew; ?> new feedback message<?= $feedbackNew > 1 ? 's' : ''; ?>
                             </div>
-                            <a href="<?= BASE_URL; ?>/pages/communications/feedback.php" style="font-size: 12px; color: #D97706; text-decoration: none;">
+                            <a href="/dentosys/pages/communications/feedback.php" style="font-size: 12px; color: #D97706; text-decoration: none;">
                                 Review feedback →
                             </a>
                         </div>
@@ -413,7 +408,7 @@ include BASE_PATH . '/templates/sidebar.php';
                     </div>
                     
                     <div style="margin-top: 20px; text-align: center;">
-                        <a href="<?= BASE_URL; ?>/pages/settings/integrations.php" class="btn-secondary-enhanced">
+                        <a href="/dentosys/pages/settings/integrations.php" class="btn-secondary-enhanced">
                             Manage Settings
                         </a>
                     </div>
@@ -427,19 +422,19 @@ include BASE_PATH . '/templates/sidebar.php';
                 </div>
                 <div class="card-body">
                     <div style="space-y: 8px;">
-                        <a href="<?= BASE_URL; ?>/pages/reports/operational.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
+                        <a href="/dentosys/pages/reports/operational.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
                             <span style="margin-right: 12px;">📊</span>
                             <span style="font-size: 14px;">View Reports</span>
                         </a>
-                        <a href="<?= BASE_URL; ?>/pages/records/prescriptions.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
+                        <a href="/dentosys/pages/records/prescriptions.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
                             <span style="margin-right: 12px;">💊</span>
                             <span style="font-size: 14px;">Prescriptions</span>
                         </a>
-                        <a href="<?= BASE_URL; ?>/pages/billing/insurance.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
+                        <a href="/dentosys/pages/billing/insurance.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
                             <span style="margin-right: 12px;">🏥</span>
                             <span style="font-size: 14px;">Insurance Claims</span>
                         </a>
-                        <a href="<?= BASE_URL; ?>/pages/help.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
+                        <a href="/dentosys/pages/help.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
                             <span style="margin-right: 12px;">❓</span>
                             <span style="font-size: 14px;">Help & Support</span>
                         </a>

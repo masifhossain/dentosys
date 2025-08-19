@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $appointment_sql = $appointment_id ? "$appointment_id" : "NULL";
     
-    $sql = "INSERT INTO Prescription 
+    $sql = "INSERT INTO Prescriptions 
             (patient_id, dentist_id, appointment_id, medication_name, dosage, 
              frequency, duration, instructions, prescribed_date, status)
             VALUES 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('Prescription added successfully.');
         redirect('prescriptions.php');
     } else {
-        flash('Error: ' . $conn->error, 'error');
+        flash('Error: ' . $conn->error);
     }
 }
 
