@@ -13,7 +13,7 @@ require_login();
 /* ───────── Admin-only ───────── */
 if (!is_admin()) {
     flash('Financial reports are restricted to administrators.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* --------------------------------------------------------------
@@ -84,6 +84,12 @@ include BASE_PATH . '/templates/sidebar.php';
 <main>
   <h2>Financial Report</h2>
   <?= get_flash(); ?>
+
+  <!-- Navigation Links -->
+  <div style="margin-bottom: 20px;">
+    <a class="btn btn-primary" href="operational.php">📊 Operational Metrics</a>
+    <a class="btn btn-outline" href="audit_log.php">📋 Audit Log</a>
+  </div>
 
   <!-- Date filter -->
   <form method="get" style="margin-bottom:14px;">

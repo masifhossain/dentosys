@@ -17,7 +17,7 @@ if ($id <= 0) {
     redirect('list.php');
 }
 
-$stmt = $conn->prepare("SELECT * FROM Patient WHERE patient_id = ? LIMIT 1");
+$stmt = $conn->prepare("SELECT * FROM patient WHERE patient_id = ? LIMIT 1");
 $stmt->bind_param('i', $id);
 $stmt->execute();
 $patient = $stmt->get_result()->fetch_assoc();
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('First and last name are required.');
     } else {
         $upd = $conn->prepare(
-          "UPDATE Patient SET first_name=?, last_name=?, dob=?, email=?, phone=?, address=?
+          "UPDATE patient SET first_name=?, last_name=?, dob=?, email=?, phone=?, address=?
            WHERE patient_id=? LIMIT 1"
         );
         $upd->bind_param('ssssssi', $fn, $ln, $dob, $eml, $ph, $addr, $id);

@@ -18,7 +18,7 @@ require_login();
 /* ───────── Admin-only ───────── */
 if (!is_admin()) {
     flash('Roles management is restricted to administrators.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* --------------------------------------------------------------
@@ -76,7 +76,7 @@ if (isset($_GET['delete'])) {
     // Prevent deleting Admin (role_id = 1) or if users still linked
     $protected = ($rid === 1);
     $hasUsers  = $conn->query(
-        "SELECT 1 FROM UserTbl WHERE role_id = $rid LIMIT 1"
+        "SELECT 1 FROM usertbl WHERE role_id = $rid LIMIT 1"
     )->num_rows > 0;
 
     if ($protected) {

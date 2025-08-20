@@ -15,7 +15,7 @@ require_login();
 $allowed = [1, 2, 3];          // role_id values you want to allow
 if (!in_array($_SESSION['role'] ?? 0, $allowed, true)) {
     flash('Access denied.');
-    redirect('/index.php');
+    redirect('/dentosys/index.php');
 }
 
 /* ───────── Handle “mark reviewed” action ───────── */

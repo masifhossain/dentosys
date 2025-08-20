@@ -13,4 +13,4 @@ require_login();                                  // bounce unauthenticated user
 
 /* If you want a landing dashboard-lite right here,
    replace the redirect line with header + sidebar + main content. */
-redirect('/pages/dashboard.php');
+redirect('/dentosys/pages/dashboard.php');

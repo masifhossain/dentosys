@@ -4,6 +4,38 @@
 -- Host: localhost    Database: dentosys_db
 -- ------------------------------------------------------
 -- Server version	11.8.3-MariaDB
+--
+-- DentoSys v2.0 - Complete Dental Practice Management System
+-- ============================================================
+-- Updated: August 17, 2025
+-- 
+-- NEW FEATURES INCLUDED:
+-- =====================
+-- ✅ Prescriptions Management System
+--    - Complete medication tracking and management
+--    - Status workflow (Active/Completed/Cancelled)
+--    - Integration with appointments and patient records
+--
+-- ✅ Insurance Claims Processing
+--    - Full claims lifecycle management
+--    - Multiple insurance provider support
+--    - Financial tracking and KPI reporting
+--
+-- ✅ Enhanced Integration Management
+--    - Modern API management system
+--    - Support for payment gateways, email, SMS, calendar sync
+--    - Configuration management with JSON storage
+--
+-- ✅ Figma-Inspired UI Design System
+--    - Modern responsive design framework
+--    - Enhanced user experience components
+--    - Professional dental practice interface
+--
+-- EXISTING CORE FEATURES:
+-- ======================
+-- • Patient Management • Appointment Scheduling • Billing & Invoicing
+-- • Clinical Records • Communications • Reports & Analytics
+-- • User Management • Role-Based Access Control • Audit Logging
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -194,6 +226,7 @@ CREATE TABLE `Invoice` (
   `patient_id` int(11) NOT NULL,
   `issued_date` date NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
+  `description` text DEFAULT NULL,
   `status` enum('Paid','Unpaid') DEFAULT 'Unpaid',
   PRIMARY KEY (`invoice_id`),
   KEY `patient_id` (`patient_id`),
@@ -209,8 +242,8 @@ LOCK TABLES `Invoice` WRITE;
 /*!40000 ALTER TABLE `Invoice` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `Invoice` VALUES
-(1,3,'2025-08-03',250.00,'Paid'),
-(2,1,'2025-07-13',150.00,'Unpaid');
+(1,3,'2025-08-03',250.00,'Dental cleaning, fluoride treatment, and oral examination','Paid'),
+(2,1,'2025-07-13',150.00,'Root canal consultation and X-ray','Unpaid');
 /*!40000 ALTER TABLE `Invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -433,11 +466,143 @@ LOCK TABLES `UserTbl` WRITE;
 /*!40000 ALTER TABLE `UserTbl` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `UserTbl` VALUES
-(1,'admin@dentosys.local','$2y$10$E.V2i0eCg0VvN9aZ3uBwA.xY8QeX2s7z3R/u5i4o6k9q7j8L9m0O',1,1,'2025-08-13 06:22:59'),
-(2,'s.williams@dentosys.local','$2y$10$F.A1b2c3D4e5F6g7H8i9j.kL/mNopQrStUvWxYzAbCdEfGhIjKlM',2,1,'2025-08-13 06:22:59'),
-(3,'j.chen@dentosys.local','$2y$10$F.A1b2c3D4e5F6g7H8i9j.kL/mNopQrStUvWxYzAbCdEfGhIjKlM',2,1,'2025-08-13 06:22:59'),
-(4,'reception@dentosys.local','$2y$10$G.h1i2j3k4l5m6n7o8p9q.rStUvWxYzAbCdEfGhIjKlMnOpQrStU',3,1,'2025-08-13 06:22:59');
+(1,'admin@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',1,1,'2025-08-13 06:22:59'),
+(2,'s.williams@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',2,1,'2025-08-13 06:22:59'),
+(3,'j.chen@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',2,1,'2025-08-13 06:22:59'),
+(4,'reception@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',3,1,'2025-08-13 06:22:59');
 /*!40000 ALTER TABLE `UserTbl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Prescriptions`
+-- NEW: Prescription management system
+--
+
+DROP TABLE IF EXISTS `Prescriptions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Prescriptions` (
+  `prescription_id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL,
+  `dentist_id` int(11) NOT NULL,
+  `appointment_id` int(11) DEFAULT NULL,
+  `medication_name` varchar(255) NOT NULL,
+  `dosage` varchar(100) NOT NULL,
+  `frequency` varchar(100) NOT NULL,
+  `duration` varchar(100) NOT NULL,
+  `instructions` text DEFAULT NULL,
+  `status` enum('Active','Completed','Cancelled') DEFAULT 'Active',
+  `prescribed_date` datetime DEFAULT current_timestamp(),
+  `created_at` timestamp DEFAULT current_timestamp(),
+  `updated_at` timestamp DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`prescription_id`),
+  KEY `patient_id` (`patient_id`),
+  KEY `dentist_id` (`dentist_id`),
+  KEY `appointment_id` (`appointment_id`),
+  CONSTRAINT `Prescriptions_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`),
+  CONSTRAINT `Prescriptions_ibfk_2` FOREIGN KEY (`dentist_id`) REFERENCES `Dentist` (`dentist_id`),
+  CONSTRAINT `Prescriptions_ibfk_3` FOREIGN KEY (`appointment_id`) REFERENCES `Appointment` (`appointment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Prescriptions`
+--
+
+LOCK TABLES `Prescriptions` WRITE;
+/*!40000 ALTER TABLE `Prescriptions` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `Prescriptions` VALUES
+(1,1,1,1,'Amoxicillin 500mg','500mg','3 times daily','7 days','Take with food to avoid stomach upset. Complete full course.','Active','2025-08-17 10:00:00','2025-08-17 10:00:00','2025-08-17 10:00:00'),
+(2,2,2,2,'Ibuprofen 400mg','400mg','2 times daily','5 days','For pain and inflammation relief. Take after meals.','Active','2025-08-17 11:30:00','2025-08-17 11:30:00','2025-08-17 11:30:00'),
+(3,3,1,NULL,'Chlorhexidine Mouthwash 0.2%','10ml','Twice daily','14 days','Rinse for 30 seconds, do not swallow. Use after tooth extraction.','Completed','2025-08-15 14:15:00','2025-08-15 14:15:00','2025-08-17 09:00:00');
+/*!40000 ALTER TABLE `Prescriptions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `InsuranceClaims`
+-- NEW: Insurance claims management system
+--
+
+DROP TABLE IF EXISTS `InsuranceClaims`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `InsuranceClaims` (
+  `claim_id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL,
+  `invoice_id` int(11) DEFAULT NULL,
+  `claim_number` varchar(50) NOT NULL,
+  `insurance_provider` varchar(255) NOT NULL,
+  `policy_number` varchar(100) NOT NULL,
+  `claim_amount` decimal(10,2) NOT NULL,
+  `approved_amount` decimal(10,2) DEFAULT NULL,
+  `status` enum('Submitted','Under Review','Approved','Rejected','Paid') DEFAULT 'Submitted',
+  `submission_date` datetime DEFAULT current_timestamp(),
+  `response_date` datetime DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `created_at` timestamp DEFAULT current_timestamp(),
+  `updated_at` timestamp DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`claim_id`),
+  UNIQUE KEY `claim_number` (`claim_number`),
+  KEY `patient_id` (`patient_id`),
+  KEY `invoice_id` (`invoice_id`),
+  CONSTRAINT `InsuranceClaims_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`),
+  CONSTRAINT `InsuranceClaims_ibfk_2` FOREIGN KEY (`invoice_id`) REFERENCES `Invoice` (`invoice_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `InsuranceClaims`
+--
+
+LOCK TABLES `InsuranceClaims` WRITE;
+/*!40000 ALTER TABLE `InsuranceClaims` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `InsuranceClaims` VALUES
+(1,1,1,'CLM-2025-001','MediBank Private','POL123456789',350.00,315.00,'Approved','2025-08-16 09:00:00','2025-08-17 14:30:00','Routine cleaning and check-up approved at 90% coverage','2025-08-16 09:00:00','2025-08-17 14:30:00'),
+(2,2,2,'CLM-2025-002','Bupa Health Insurance','POL987654321',1200.00,NULL,'Under Review','2025-08-17 11:15:00',NULL,'Orthodontic consultation claim pending review','2025-08-17 11:15:00','2025-08-17 11:15:00'),
+(3,3,3,'CLM-2025-003','HCF Health Insurance','POL456789123',800.00,600.00,'Paid','2025-08-15 10:30:00','2025-08-16 16:45:00','Emergency extraction approved and paid','2025-08-15 10:30:00','2025-08-16 16:45:00');
+/*!40000 ALTER TABLE `InsuranceClaims` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `IntegrationSettings`
+-- NEW: Enhanced integration management system
+--
+
+DROP TABLE IF EXISTS `IntegrationSettings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `IntegrationSettings` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `integration_type` enum('payment_gateway','email_service','sms_service','calendar_sync','backup_service') NOT NULL,
+  `provider_name` varchar(100) NOT NULL,
+  `api_key` varchar(255) DEFAULT NULL,
+  `api_secret` varchar(255) DEFAULT NULL,
+  `webhook_url` varchar(255) DEFAULT NULL,
+  `is_active` boolean DEFAULT FALSE,
+  `test_mode` boolean DEFAULT TRUE,
+  `configuration` json DEFAULT NULL,
+  `created_at` timestamp DEFAULT current_timestamp(),
+  `updated_at` timestamp DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`setting_id`),
+  UNIQUE KEY `unique_integration` (`integration_type`, `provider_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `IntegrationSettings`
+--
+
+LOCK TABLES `IntegrationSettings` WRITE;
+/*!40000 ALTER TABLE `IntegrationSettings` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `IntegrationSettings` VALUES
+(1,'payment_gateway','Stripe','sk_test_xxxxxxxxxxxxxxxxxxxx','','https://dentosys.local/webhook/stripe',1,1,'{"currency": "AUD", "capture_method": "automatic"}','2025-08-17 12:00:00','2025-08-17 12:00:00'),
+(2,'email_service','SendGrid','SG.xxxxxxxxxxxxxxxxxxxx','','',1,0,'{"from_email": "noreply@dentosys.local", "from_name": "DentoSys Clinic"}','2025-08-17 12:15:00','2025-08-17 12:15:00'),
+(3,'sms_service','Twilio','ACxxxxxxxxxxxxxxxxxxxx','xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','',0,1,'{"phone_number": "+61412345678"}','2025-08-17 12:30:00','2025-08-17 12:30:00'),
+(4,'backup_service','AWS S3','AKIAXXXXXXXXXXXXXXXXX','xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','',1,0,'{"bucket_name": "dentosys-backups", "region": "ap-southeast-2"}','2025-08-17 12:45:00','2025-08-17 12:45:00');
+/*!40000 ALTER TABLE `IntegrationSettings` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -450,4 +615,10 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-08-16 15:40:46
+-- Dump completed on 2025-08-17 17:40:00
+-- Updated with new DentoSys v2.0 features:
+-- - Prescriptions management system
+-- - Insurance claims processing  
+-- - Enhanced integrations with multiple providers
+-- - Figma-inspired UI enhancements
+-- Complete dental practice management solution
