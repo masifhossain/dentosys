@@ -8,12 +8,7 @@ require_once dirname(__DIR__, 2) . '/includes/db.php';
 require_once BASE_PATH . '/includes/functions.php';
 
 require_login();
-
-/* ───────── Admin-only gate ───────── */
-if (!is_admin()) {
-    flash('Settings are restricted to administrators.');
-    redirect('/dentosys/index.php');
-}
+require_admin();
 
 include BASE_PATH . '/templates/header.php';
 include BASE_PATH . '/templates/sidebar.php';
@@ -29,7 +24,7 @@ include BASE_PATH . '/templates/sidebar.php';
     </div>
 
     <div class="content-body">
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-3 gap-6">
             <!-- Staff Management -->
             <div class="card-enhanced admin-menu-card">
                 <div class="card-body" style="text-align: center; padding: 40px 30px;">
@@ -40,6 +35,20 @@ include BASE_PATH . '/templates/sidebar.php';
                     </p>
                     <a href="users.php" class="btn-primary-enhanced">
                         Manage Staff Accounts
+                    </a>
+                </div>
+            </div>
+
+            <!-- Patient Management -->
+            <div class="card-enhanced admin-menu-card">
+                <div class="card-body" style="text-align: center; padding: 40px 30px;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">🏥</div>
+                    <h3 style="margin: 0 0 12px; color: #1e293b;">Patient Management</h3>
+                    <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">
+                        Manage patient accounts and portal access
+                    </p>
+                    <a href="patients.php" class="btn-primary-enhanced">
+                        Manage Patient Accounts
                     </a>
                 </div>
             </div>
@@ -57,6 +66,10 @@ include BASE_PATH . '/templates/sidebar.php';
                     </a>
                 </div>
             </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="grid grid-cols-2 gap-6" style="margin-top: 30px;">
 
             <!-- Role Management -->
             <div class="card-enhanced admin-menu-card">
@@ -172,6 +185,7 @@ body:has(main.main-content-enhanced) main {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .grid-cols-2,
+    .grid-cols-3,
     .grid-cols-4 {
         grid-template-columns: 1fr;
     }

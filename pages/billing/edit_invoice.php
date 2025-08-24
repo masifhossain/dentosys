@@ -12,7 +12,8 @@ require_login();
 /* ───────── ROLE RESTRICTION ─────────
  * Allow only Admin (role_id = 1) or Receptionist (role_id = 3)
  */
-if (!is_admin() && ($_SESSION['role'] ?? 0) !== 3) {
+// Dentists cannot edit invoices
+if (is_dentist() || (!is_admin() && ($_SESSION['role'] ?? 0) !== 3)) {
     flash('You do not have permission to edit invoices.');
     redirect('/dentosys/index.php');
 }

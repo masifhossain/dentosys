@@ -6,11 +6,8 @@
 require_once dirname(__DIR__, 2) . '/includes/db.php';
 require_once BASE_PATH . '/includes/functions.php';
 
-// Check if user is logged in and is a patient
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 4) {
-    flash('Access denied. Patients only.');
-    redirect('/dentosys/auth/login.php');
-}
+require_login();
+require_patient(); // Only patients can book appointments
 
 $user_id = $_SESSION['user_id'];
 
@@ -81,14 +78,15 @@ $pageTitle = 'Book Appointment';
 include BASE_PATH . '/templates/header.php';
 ?>
 
-<div class="main-wrapper">
+<div class="main-wrapper patient-page full-width">
   <?php include BASE_PATH . '/templates/sidebar.php'; ?>
   
   <main class="content">
-    <header class="content-header">
-      <h1>➕ Book Appointment</h1>
-      <p>Schedule your next dental visit</p>
-    </header>
+    <div class="page-container">
+      <header class="content-header">
+        <h1>➕ Book Appointment</h1>
+        <p class="subtitle">Schedule your next dental visit</p>
+      </header>
 
     <?= get_flash(); ?>
 
@@ -198,29 +196,96 @@ include BASE_PATH . '/templates/header.php';
         </div>
       </div>
     </div>
+    </div>
   </main>
 </div>
 
 <style>
+/* Patient page full-width layout */
+.patient-page.full-width .content {
+  padding: 0;
+  width: 100%;
+}
+
+.patient-page .page-container {
+  width: 100%;
+  padding: 2rem;
+  margin: 0;
+}
+
+.patient-page .content-header {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.patient-page .content-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.patient-page .content-header .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.patient-page .card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.patient-page .card-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.patient-page .card-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #1e293b;
+}
+
+.patient-page .card-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.patient-page .card-body {
+  padding: 2rem;
+}
+
 .appointment-form {
+  width: 100%;
   max-width: 600px;
+  margin: 0 auto;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
   display: block;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   color: #374151;
 }
 
@@ -228,10 +293,10 @@ include BASE_PATH . '/templates/header.php';
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   border: 2px solid #e5e7eb;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1rem;
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
@@ -240,82 +305,104 @@ include BASE_PATH . '/templates/header.php';
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #0066CC;
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 .form-actions {
-  padding-top: 20px;
+  padding-top: 1.5rem;
   border-top: 1px solid #e5e7eb;
   display: flex;
-  gap: 12px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background: #0066CC;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #0052A3;
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: #f3f4f6;
-  color: #374151;
-  border: 1px solid #d1d5db;
-}
-
-.btn-secondary:hover {
-  background: #e5e7eb;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .guidelines {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  gap: 1rem;
 }
 
 .guideline {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding: 16px;
-  background: #f9fafb;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
   border-radius: 8px;
-  border-left: 4px solid #0066CC;
+  border-left: 4px solid #4f46e5;
 }
 
 .guideline .icon {
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 1;
 }
 
 .guideline strong {
   display: block;
-  margin-bottom: 4px;
-  color: #1f2937;
+  margin-bottom: 0.25rem;
+  color: #1e293b;
 }
 
 .guideline p {
   margin: 0;
-  color: #6b7280;
-  font-size: 14px;
+  color: #64748b;
 }
 
 .mt-4 {
   margin-top: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all .2s ease;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  color: #374151;
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.btn-secondary:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .patient-page .page-container {
+    padding: 1rem;
+  }
+  
+  .patient-page .content-header {
+    padding: 2rem 1rem;
+  }
 }
 </style>
 

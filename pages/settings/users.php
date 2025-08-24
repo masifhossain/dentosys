@@ -11,12 +11,7 @@ require_once dirname(__DIR__, 2) . '/includes/db.php';   // up 2 levels
 require_once BASE_PATH . '/includes/functions.php';
 
 require_login();
-
-/* ───────── Admin-only gate ───────── */
-if (!is_admin()) {
-    flash('User management is restricted to administrators.');
-    redirect('/dentosys/index.php');
-}
+require_admin();
 
 /* --------------------------------------------------------------
  * 1. Fetch roles once for dropdowns
