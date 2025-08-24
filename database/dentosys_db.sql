@@ -370,7 +370,8 @@ set autocommit=0;
 INSERT INTO `Role` VALUES
 (1,'Admin'),
 (2,'Dentist'),
-(3,'Receptionist');
+(3,'Receptionist'),
+(4,'Patient');
 /*!40000 ALTER TABLE `Role` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -455,7 +456,7 @@ CREATE TABLE `UserTbl` (
   UNIQUE KEY `email` (`email`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `UserTbl_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `Role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,10 +467,11 @@ LOCK TABLES `UserTbl` WRITE;
 /*!40000 ALTER TABLE `UserTbl` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `UserTbl` VALUES
-(1,'admin@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',1,1,'2025-08-13 06:22:59'),
-(2,'s.williams@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',2,1,'2025-08-13 06:22:59'),
-(3,'j.chen@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',2,1,'2025-08-13 06:22:59'),
-(4,'reception@dentosys.local','$2y$10$r.3BP8kyNA2p8pKF0HXWEejqk0dVs/YT1YEIhIUdphHv6UsgdTrJ2',3,1,'2025-08-13 06:22:59');
+(1,'admin@dentosys.local','$2y$10$6pntDT20jNA4NiW2mcgszuDGcAZEWo8d5uN3qmaQtHCwaDIR1I5ry',1,1,'2025-08-13 06:22:59'),
+(2,'s.williams@dentosys.local','$2y$10$6pntDT20jNA4NiW2mcgszuDGcAZEWo8d5uN3qmaQtHCwaDIR1I5ry',2,1,'2025-08-13 06:22:59'),
+(3,'j.chen@dentosys.local','$2y$10$6pntDT20jNA4NiW2mcgszuDGcAZEWo8d5uN3qmaQtHCwaDIR1I5ry',2,0,'2025-08-13 06:22:59'),
+(4,'reception@dentosys.local','$2y$10$6pntDT20jNA4NiW2mcgszuDGcAZEWo8d5uN3qmaQtHCwaDIR1I5ry',3,1,'2025-08-13 06:22:59'),
+(5,'masifhossain@dentosys.local','$2y$10$6pntDT20jNA4NiW2mcgszuDGcAZEWo8d5uN3qmaQtHCwaDIR1I5ry',1,1,'2025-08-20 00:00:00');
 /*!40000 ALTER TABLE `UserTbl` ENABLE KEYS */;
 UNLOCK TABLES;
 

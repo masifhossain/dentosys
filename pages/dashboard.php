@@ -5,105 +5,223 @@
  * Enhanced Clinic Dashboard with Figma Design
  *  • Modern KPI cards with icons and gradients
  *  • Interactive charts and widgets
- *  • Quick actions and recent activity
+ *  • Qu                          <a href="/dentosys/pages/records/add_note.php" class="btn-secondary-enhanced">
+                            📝 Add Clinical Note
+                        </a>                   <a href="/dentosys/pages/records/add_note.php" class="btn-secondary-enhanced">
+                            📝 Add Clinical Note
+                        </a> actions and recent activity
  *  • Responsive design with grid layout
- *****************************************************************/
+ ***********************************************                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*********/
 require_once dirname(__DIR__) . '/includes/db.php';
 require_once BASE_PATH . '/includes/functions.php';
 
 require_login();
 
+// Check if user is a patient - redirect them to patient portal
+if (isset($_SESSION['role']) && (int)$_SESSION['role'] === 4) {
+    flash('Patients should use the patient portal.');
+    redirect('patients/dashboard.php');
+}
+
 // Helper function to get user display name
 function get_user_display_name() {
-    return $_SESSION['username'] ?? 'User';
+    return $_SESSION['first_name'] ?? 'User';
 }
 
 /* --------------------------------------------------------------
- * 1. Enhanced KPI queries
+ * 1. Enhanced KPI queries with role-based filtering
  * ------------------------------------------------------------ */
 $today = date('Y-m-d');
 $thisMonth = date('Y-m');
 $yesterday = date('Y-m-d', strtotime('-1 day'));
 $lastMonth = date('Y-m', strtotime('-1 month'));
 
+// Build filtering conditions for dentists
+$dentist_filter = '';
+$patient_filter = '';
+if (is_dentist()) {
+    $current_dentist_id = get_current_dentist_id();
+    if ($current_dentist_id) {
+        $dentist_filter = "AND a.dentist_id = $current_dentist_id";
+        
+        // Get patient IDs for this dentist
+        $patient_ids = get_dentist_patient_ids();
+        if (!empty($patient_ids)) {
+            $patient_ids_str = implode(',', $patient_ids);
+            $patient_filter = "AND patient_id IN ($patient_ids_str)";
+        } else {
+            $patient_filter = "AND 1 = 0"; // No patients
+        }
+    } else {
+        $dentist_filter = "AND 1 = 0"; // Show no data if dentist not found
+        $patient_filter = "AND 1 = 0";
+    }
+}
+
 // Today's appointments
 $apptsToday = $conn->query(
     "SELECT COUNT(*) AS c
-     FROM appointment
-     WHERE DATE(appointment_dt) = '$today'
-       AND status IN ('Scheduled','Pending','Approved')"
+     FROM appointment a
+     WHERE DATE(a.appointment_dt) = '$today'
+       AND a.status IN ('Scheduled','Pending','Approved')
+       $dentist_filter"
 )->fetch_assoc()['c'] ?? 0;
 
 // Yesterday's appointments for comparison
 $apptsYesterday = $conn->query(
     "SELECT COUNT(*) AS c
-     FROM appointment
-     WHERE DATE(appointment_dt) = '$yesterday'
-       AND status IN ('Scheduled','Pending','Approved')"
+     FROM appointment a
+     WHERE DATE(a.appointment_dt) = '$yesterday'
+       AND a.status IN ('Scheduled','Pending','Approved')
+       $dentist_filter"
 )->fetch_assoc()['c'] ?? 0;
 
-// Total patients
-$totalPatients = $conn->query(
-    "SELECT COUNT(*) AS c FROM patient"
-)->fetch_assoc()['c'] ?? 0;
+// Total patients (role-based)
+if (is_dentist()) {
+    $totalPatients = !empty($patient_ids) ? count($patient_ids) : 0;
+} else {
+    $totalPatients = $conn->query(
+        "SELECT COUNT(*) AS c FROM patient"
+    )->fetch_assoc()['c'] ?? 0;
+}
 
 // New patients this month
 $newPatientsMonth = 0;
 $checkColumn = $conn->query("SHOW COLUMNS FROM patient LIKE 'created_at'");
 if ($checkColumn && $checkColumn->num_rows > 0) {
-    $newPatientsMonth = $conn->query(
-        "SELECT COUNT(*) AS c FROM patient WHERE DATE_FORMAT(created_at, '%Y-%m') = '$thisMonth'"
-    )->fetch_assoc()['c'] ?? 0;
+    if (is_dentist()) {
+        if (!empty($patient_ids)) {
+            $patient_ids_str = implode(',', $patient_ids);
+            $newPatientsMonth = $conn->query(
+                "SELECT COUNT(*) AS c FROM patient 
+                 WHERE DATE_FORMAT(created_at, '%Y-%m') = '$thisMonth' 
+                 AND patient_id IN ($patient_ids_str)"
+            )->fetch_assoc()['c'] ?? 0;
+        }
+    } else {
+        $newPatientsMonth = $conn->query(
+            "SELECT COUNT(*) AS c FROM patient WHERE DATE_FORMAT(created_at, '%Y-%m') = '$thisMonth'"
+        )->fetch_assoc()['c'] ?? 0;
+    }
 } else {
     // Fallback if created_at column doesn't exist
-    $newPatientsMonth = $conn->query(
-        "SELECT COUNT(*) AS c FROM patient WHERE patient_id > 0"
-    )->fetch_assoc()['c'] ?? 0;
+    if (is_dentist()) {
+        $newPatientsMonth = $totalPatients; // Use total patients as fallback
+    } else {
+        $newPatientsMonth = $conn->query(
+            "SELECT COUNT(*) AS c FROM patient WHERE patient_id > 0"
+        )->fetch_assoc()['c'] ?? 0;
+    }
 }
 
 // Last month's new patients for comparison
 $newPatientsLastMonth = 0;
 if ($checkColumn && $checkColumn->num_rows > 0) {
-    $newPatientsLastMonth = $conn->query(
-        "SELECT COUNT(*) AS c FROM patient WHERE DATE_FORMAT(created_at, '%Y-%m') = '$lastMonth'"
-    )->fetch_assoc()['c'] ?? 0;
+    if (is_dentist()) {
+        if (!empty($patient_ids)) {
+            $patient_ids_str = implode(',', $patient_ids);
+            $newPatientsLastMonth = $conn->query(
+                "SELECT COUNT(*) AS c FROM patient 
+                 WHERE DATE_FORMAT(created_at, '%Y-%m') = '$lastMonth' 
+                 AND patient_id IN ($patient_ids_str)"
+            )->fetch_assoc()['c'] ?? 0;
+        }
+    } else {
+        $newPatientsLastMonth = $conn->query(
+            "SELECT COUNT(*) AS c FROM patient WHERE DATE_FORMAT(created_at, '%Y-%m') = '$lastMonth'"
+        )->fetch_assoc()['c'] ?? 0;
+    }
 }
 
-// Outstanding invoices
-$outstanding = $conn->query(
-    "SELECT COUNT(*) AS cnt,
-            COALESCE(SUM(total_amount),0) AS amt
-     FROM Invoice WHERE status = 'Unpaid'"
-)->fetch_assoc();
+// Outstanding invoices (role-based)
+if (is_dentist()) {
+    if (!empty($patient_ids)) {
+        $patient_ids_str = implode(',', $patient_ids);
+        $outstanding = $conn->query(
+            "SELECT COUNT(*) AS cnt,
+                    COALESCE(SUM(total_amount),0) AS amt
+             FROM Invoice WHERE status = 'Unpaid' AND patient_id IN ($patient_ids_str)"
+        )->fetch_assoc();
+    } else {
+        $outstanding = ['cnt' => 0, 'amt' => 0];
+    }
+} else {
+    $outstanding = $conn->query(
+        "SELECT COUNT(*) AS cnt,
+                COALESCE(SUM(total_amount),0) AS amt
+         FROM Invoice WHERE status = 'Unpaid'"
+    )->fetch_assoc();
+}
 
-// Monthly revenue
+// Monthly revenue (role-based)
 $monthlyRevenue = 0;
 $checkInvoiceColumn = $conn->query("SHOW COLUMNS FROM Invoice LIKE 'created_at'");
 if ($checkInvoiceColumn && $checkInvoiceColumn->num_rows > 0) {
-    $monthlyRevenue = $conn->query(
-        "SELECT COALESCE(SUM(total_amount),0) AS amt
-         FROM Invoice 
-         WHERE status = 'Paid' 
-         AND DATE_FORMAT(created_at, '%Y-%m') = '$thisMonth'"
-    )->fetch_assoc()['amt'] ?? 0;
+    if (is_dentist()) {
+        if (!empty($patient_ids)) {
+            $patient_ids_str = implode(',', $patient_ids);
+            $monthlyRevenue = $conn->query(
+                "SELECT COALESCE(SUM(total_amount),0) AS amt
+                 FROM Invoice 
+                 WHERE status = 'Paid' 
+                 AND DATE_FORMAT(created_at, '%Y-%m') = '$thisMonth'
+                 AND patient_id IN ($patient_ids_str)"
+            )->fetch_assoc()['amt'] ?? 0;
+        }
+    } else {
+        $monthlyRevenue = $conn->query(
+            "SELECT COALESCE(SUM(total_amount),0) AS amt
+             FROM Invoice 
+             WHERE status = 'Paid' 
+             AND DATE_FORMAT(created_at, '%Y-%m') = '$thisMonth'"
+        )->fetch_assoc()['amt'] ?? 0;
+    }
 } else {
     // Fallback - get all paid invoices
-    $monthlyRevenue = $conn->query(
-        "SELECT COALESCE(SUM(total_amount),0) AS amt
-         FROM Invoice 
-         WHERE status = 'Paid'"
-    )->fetch_assoc()['amt'] ?? 0;
+    if (is_dentist()) {
+        if (!empty($patient_ids)) {
+            $patient_ids_str = implode(',', $patient_ids);
+            $monthlyRevenue = $conn->query(
+                "SELECT COALESCE(SUM(total_amount),0) AS amt
+                 FROM Invoice 
+                 WHERE status = 'Paid' AND patient_id IN ($patient_ids_str)"
+            )->fetch_assoc()['amt'] ?? 0;
+        }
+    } else {
+        $monthlyRevenue = $conn->query(
+            "SELECT COALESCE(SUM(total_amount),0) AS amt
+             FROM Invoice 
+             WHERE status = 'Paid'"
+        )->fetch_assoc()['amt'] ?? 0;
+    }
 }
 
-// Last month's revenue for comparison
+// Last month's revenue for comparison (role-based)
 $lastMonthRevenue = 0;
 if ($checkInvoiceColumn && $checkInvoiceColumn->num_rows > 0) {
-    $lastMonthRevenue = $conn->query(
-        "SELECT COALESCE(SUM(total_amount),0) AS amt
-         FROM Invoice 
-         WHERE status = 'Paid' 
-         AND DATE_FORMAT(created_at, '%Y-%m') = '$lastMonth'"
-    )->fetch_assoc()['amt'] ?? 0;
+    if (is_dentist()) {
+        if (!empty($patient_ids)) {
+            $patient_ids_str = implode(',', $patient_ids);
+            $lastMonthRevenue = $conn->query(
+                "SELECT COALESCE(SUM(total_amount),0) AS amt
+                 FROM Invoice 
+                 WHERE status = 'Paid' 
+                 AND DATE_FORMAT(created_at, '%Y-%m') = '$lastMonth'
+                 AND patient_id IN ($patient_ids_str)"
+            )->fetch_assoc()['amt'] ?? 0;
+        }
+    } else {
+        $lastMonthRevenue = $conn->query(
+            "SELECT COALESCE(SUM(total_amount),0) AS amt
+             FROM Invoice 
+             WHERE status = 'Paid' 
+             AND DATE_FORMAT(created_at, '%Y-%m') = '$lastMonth'"
+        )->fetch_assoc()['amt'] ?? 0;
+    }
 }
 
 // Unread feedback
@@ -112,31 +230,50 @@ $feedbackNew = $conn->query(
 )->fetch_assoc()['c'] ?? 0;
 
 /* --------------------------------------------------------------
- * 2. Recent activity queries
+ * 2. Recent activity queries with role-based filtering
  * ------------------------------------------------------------ */
 // Next appointments today
 $nextAppts = $conn->query(
     "SELECT DATE_FORMAT(a.appointment_dt,'%H:%i') AS atime,
             CONCAT(p.first_name,' ',p.last_name) AS patient,
             a.status,
-            'Dr. Smith' as dentist_name
+            COALESCE(ut.email, 'Unassigned') as dentist_name
      FROM appointment a
      JOIN patient p ON p.patient_id = a.patient_id
      LEFT JOIN dentist d ON d.dentist_id = a.dentist_id
+     LEFT JOIN UserTbl ut ON ut.user_id = d.user_id
      WHERE DATE(a.appointment_dt) = '$today'
+     $dentist_filter
      ORDER BY a.appointment_dt
      LIMIT 5"
 );
 
-// Recent patients
-$recentPatients = $conn->query(
-    "SELECT CONCAT(first_name,' ',last_name) AS name,
-            'Recently added' AS joined_date,
-            phone
-     FROM patient 
-     ORDER BY patient_id DESC 
-     LIMIT 5"
-);
+// Recent patients (role-based)
+if (is_dentist()) {
+    if (!empty($patient_ids)) {
+        $patient_ids_str = implode(',', $patient_ids);
+        $recentPatients = $conn->query(
+            "SELECT CONCAT(first_name,' ',last_name) AS name,
+                    'Recently added' AS joined_date,
+                    phone
+             FROM patient 
+             WHERE patient_id IN ($patient_ids_str)
+             ORDER BY patient_id DESC 
+             LIMIT 5"
+        );
+    } else {
+        $recentPatients = null; // No patients for this dentist
+    }
+} else {
+    $recentPatients = $conn->query(
+        "SELECT CONCAT(first_name,' ',last_name) AS name,
+                'Recently added' AS joined_date,
+                phone
+         FROM patient 
+         ORDER BY patient_id DESC 
+         LIMIT 5"
+    );
+}
 
 // Calculate growth percentages
 function calculateGrowth($current, $previous) {
@@ -170,6 +307,7 @@ include BASE_PATH . '/templates/sidebar.php';
                 </div>
                 <div class="card-body" style="padding: 24px;">
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <?php if (!is_dentist()): ?>
                         <a href="/dentosys/pages/appointments/book.php" class="btn-primary-enhanced">
                             📅 Book Appointment
                         </a>
@@ -179,9 +317,27 @@ include BASE_PATH . '/templates/sidebar.php';
                         <a href="/dentosys/pages/billing/create_invoice.php" class="btn-secondary-enhanced">
                             💰 Create Invoice
                         </a>
-                        <a href="/dentosys/pages/records/add_prescription.php" class="btn-secondary-enhanced">
-                            💊 New Prescription
+                        <?php else: ?>
+                        <a href="/dentosys/pages/records/add_prescription.php" class="btn-primary-enhanced">
+                            &#128138; New Prescription
                         </a>
+                        <a href="/dentosys/pages/records/add_note.php" class="btn-secondary-enhanced">
+                            &#128221; Add Clinical Note
+                        </a>
+                        <a href="/dentosys/pages/appointments/calendar.php" class="btn-secondary-enhanced">
+                            &#128197; View My Schedule
+                        </a>
+                        <a href="/dentosys/pages/patients/list.php" class="btn-secondary-enhanced">
+                            &#128101; My Patients
+                        </a>
+                        <?php endif; ?>
+                        <?php if (is_admin()): ?>
+                        <a href="/dentosys/pages/records/add_prescription.php" class="btn-secondary-enhanced">
+                            � New Prescription
+                        </a>
+                        <?php endif; ?>
+                        <?php if (is_dentist()): ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -191,15 +347,15 @@ include BASE_PATH . '/templates/sidebar.php';
         <div class="dashboard-section">
             <div class="card-enhanced" style="margin-bottom: 20px;">
                 <div class="card-header">
-                    <h3>📊 Key Performance Indicators</h3>
+                    <h3>📊 <?= is_dentist() ? 'My Performance Indicators' : 'Key Performance Indicators' ?></h3>
                 </div>
                 <div class="card-body" style="padding: 24px;">
                     <div class="grid grid-cols-4 gap-4">
                         <!-- Today's Appointments -->
-                        <div class="stats-card">
-                            <div class="stats-icon">📅</div>
-                            <div class="stats-value"><?= $apptsToday; ?></div>
-                            <div class="stats-label">Today's Appointments</div>
+                        <div class="kpi-card-clean">
+                            <div class="kpi-icon">📅</div>
+                            <div class="kpi-value"><?= $apptsToday; ?></div>
+                            <div class="kpi-label"><?= is_dentist() ? "Today's Appointments" : "Today's Appointments"; ?></div>
                             <?php if ($apptGrowth != 0): ?>
                                 <div style="margin-top: 8px; font-size: 12px; color: <?= $apptGrowth > 0 ? '#10B981' : '#EF4444'; ?>;">
                                     <?= $apptGrowth > 0 ? '↗' : '↘'; ?> <?= abs($apptGrowth); ?>% vs yesterday
@@ -208,20 +364,20 @@ include BASE_PATH . '/templates/sidebar.php';
                         </div>
 
                         <!-- Total Patients -->
-                        <div class="stats-card">
-                            <div class="stats-icon">👥</div>
-                            <div class="stats-value"><?= $totalPatients; ?></div>
-                            <div class="stats-label">Total Patients</div>
+                        <div class="kpi-card-clean">
+                            <div class="kpi-icon">👥</div>
+                            <div class="kpi-value"><?= $totalPatients; ?></div>
+                            <div class="kpi-label"><?= is_dentist() ? "My Patients" : "Total Patients"; ?></div>
                             <div style="margin-top: 8px; font-size: 12px; color: #64748B;">
                                 +<?= $newPatientsMonth; ?> this month
                             </div>
                         </div>
 
                         <!-- Monthly Revenue -->
-                        <div class="stats-card">
-                            <div class="stats-icon">💰</div>
-                            <div class="stats-value">$<?= number_format($monthlyRevenue, 0); ?></div>
-                            <div class="stats-label">Monthly Revenue</div>
+                        <div class="kpi-card-clean">
+                            <div class="kpi-icon">💰</div>
+                            <div class="kpi-value">$<?= number_format($monthlyRevenue, 0); ?></div>
+                            <div class="kpi-label"><?= is_dentist() ? "My Revenue" : "Monthly Revenue"; ?></div>
                             <?php if ($revenueGrowth != 0): ?>
                                 <div style="margin-top: 8px; font-size: 12px; color: <?= $revenueGrowth > 0 ? '#10B981' : '#EF4444'; ?>;">
                                     <?= $revenueGrowth > 0 ? '↗' : '↘'; ?> <?= abs($revenueGrowth); ?>% vs last month
@@ -230,10 +386,10 @@ include BASE_PATH . '/templates/sidebar.php';
                         </div>
 
                         <!-- Outstanding Invoices -->
-                        <div class="stats-card">
-                            <div class="stats-icon">⚠️</div>
-                            <div class="stats-value"><?= $outstanding['cnt']; ?></div>
-                            <div class="stats-label">Outstanding Invoices</div>
+                        <div class="kpi-card-clean">
+                            <div class="kpi-icon">⚠️</div>
+                            <div class="kpi-value"><?= $outstanding['cnt']; ?></div>
+                            <div class="kpi-label">Outstanding Invoices</div>
                             <div style="margin-top: 8px; font-size: 12px; color: #F59E0B;">
                                 $<?= number_format($outstanding['amt'], 0); ?> pending
                             </div>
@@ -261,9 +417,14 @@ include BASE_PATH . '/templates/sidebar.php';
                                     <div style="text-align: center; padding: 40px 20px; color: #64748B;">
                                         <div style="font-size: 48px; margin-bottom: 16px;">🗓️</div>
                                         <p>No appointments scheduled for today</p>
-                                        <a href="/dentosys/pages/appointments/book.php" class="btn-primary-enhanced" style="margin-top: 16px;">
-                                            Book First Appointment
-                                        </a>
+                                        <?php if (!is_dentist()): ?>
+                                            <a href="/dentosys/pages/appointments/book.php" class="btn-primary-enhanced" style="margin-top: 16px;">
+                                                Book First Appointment
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if (is_dentist()): ?>
+                                            <p style="font-size: 14px; margin-top: 8px; color: #64748B;">Your schedule is clear today. Time to catch up on clinical notes!</p>
+                                        <?php endif; ?>
                                     </div>
                                 <?php else: ?>
                                     <div style="space-y: 16px;">
@@ -303,13 +464,18 @@ include BASE_PATH . '/templates/sidebar.php';
                                 <h4>👥 Recent Patients</h4>
                             </div>
                             <div class="inner-card-body">
-                                <?php if ($recentPatients->num_rows === 0): ?>
+                                <?php if (!$recentPatients || $recentPatients->num_rows === 0): ?>
                                     <div style="text-align: center; padding: 40px 20px; color: #64748B;">
                                         <div style="font-size: 48px; margin-bottom: 16px;">👤</div>
-                                        <p>No patients registered yet</p>
-                                        <a href="/dentosys/pages/patients/add.php" class="btn-primary-enhanced" style="margin-top: 16px;">
-                                            Add First Patient
-                                        </a>
+                                        <?php if (is_dentist()): ?>
+                                            <p>No patients assigned yet</p>
+                                            <p style="font-size: 14px; margin-top: 8px;">Patients will appear here once you have appointments scheduled with them.</p>
+                                        <?php else: ?>
+                                            <p>No patients registered yet</p>
+                                            <a href="/dentosys/pages/patients/add.php" class="btn-primary-enhanced" style="margin-top: 16px;">
+                                                Add First Patient
+                                            </a>
+                                        <?php endif; ?>
                                     </div>
                                 <?php else: ?>
                                     <div style="space-y: 12px;">
@@ -334,7 +500,7 @@ include BASE_PATH . '/templates/sidebar.php';
                                     </div>
                                     <div style="text-align: center; margin-top: 20px;">
                                         <a href="/dentosys/pages/patients/list.php" class="btn-secondary-enhanced">
-                                            View All Patients
+                                            <?= is_dentist() ? 'View My Patients' : 'View All Patients' ?>
                                         </a>
                                     </div>
                                 <?php endif; ?>
@@ -346,9 +512,9 @@ include BASE_PATH . '/templates/sidebar.php';
         </div>
 
         <!-- Quick Stats Row -->
-        <div class="grid grid-cols-3 gap-4" style="margin-top: 30px;">
+        <div class="grid grid-cols-3 gap-4 dashboard-bottom-row" style="margin-top: 30px;">
             <!-- Monthly Performance -->
-            <div class="card-enhanced">
+            <div class="card-enhanced with-bottom-line">
                 <div class="card-header">
                     <h3>📈 Monthly Performance</h3>
                 </div>
@@ -386,8 +552,9 @@ include BASE_PATH . '/templates/sidebar.php';
                 </div>
             </div>
 
-            <!-- System Status -->
-            <div class="card-enhanced">
+            <!-- System Status (Admins only) -->
+            <?php if (is_admin()): ?>
+            <div class="card-enhanced with-bottom-line">
                 <div class="card-header">
                     <h3>⚙️ System Status</h3>
                 </div>
@@ -414,9 +581,11 @@ include BASE_PATH . '/templates/sidebar.php';
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
-            <!-- Quick Links -->
-            <div class="card-enhanced">
+            <!-- Quick Links (hidden for Receptionist) -->
+            <?php if (!is_receptionist()): ?>
+            <div class="card-enhanced with-bottom-line">
                 <div class="card-header">
                     <h3>🚀 Quick Links</h3>
                 </div>
@@ -430,17 +599,22 @@ include BASE_PATH . '/templates/sidebar.php';
                             <span style="margin-right: 12px;">💊</span>
                             <span style="font-size: 14px;">Prescriptions</span>
                         </a>
+                        <?php if (!is_dentist()): ?>
                         <a href="/dentosys/pages/billing/insurance.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
                             <span style="margin-right: 12px;">🏥</span>
                             <span style="font-size: 14px;">Insurance Claims</span>
                         </a>
+                        <?php endif; ?>
+                        <?php if (is_admin()): ?>
                         <a href="/dentosys/pages/help.php" style="display: flex; align-items: center; padding: 8px; text-decoration: none; color: #1E293B; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
                             <span style="margin-right: 12px;">❓</span>
                             <span style="font-size: 14px;">Help & Support</span>
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </main>
@@ -455,6 +629,80 @@ main.main-content-enhanced {
     overflow-x: auto;
 }
 
+/* Dashboard specific overrides - Remove ALL borders */
+main.main-content-enhanced .dashboard-section {
+    border: none !important;
+    outline: none !important;
+}
+
+main.main-content-enhanced .card-enhanced {
+    border: none !important;
+    outline: none !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+main.main-content-enhanced .card-header {
+    border: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+}
+
+main.main-content-enhanced .card-body {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Remove any pseudo-element borders */
+main.main-content-enhanced .dashboard-section::before,
+main.main-content-enhanced .dashboard-section::after,
+main.main-content-enhanced .card-enhanced::before,
+main.main-content-enhanced .card-enhanced::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Completely new KPI card design */
+.kpi-card-clean {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0;
+    border: 0;
+    outline: 0;
+}
+
+.kpi-card-clean:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.kpi-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.kpi-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.kpi-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 /* Override default main padding for dashboard */
 body:has(main.main-content-enhanced) main {
     padding: 0;
@@ -467,12 +715,6 @@ body:has(main.main-content-enhanced) .site-footer {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1200px) {
-    .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
-    .grid-cols-3 { grid-template-columns: repeat(1, 1fr); }
-    .grid-cols-2 { grid-template-columns: repeat(1, 1fr); }
-}
-/* Responsive grid adjustments */
 @media (max-width: 1200px) {
     .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
     .grid-cols-3 { grid-template-columns: repeat(1, 1fr); }
@@ -515,6 +757,15 @@ body:has(main.main-content-enhanced) .site-footer {
     transform: translateY(-1px);
     transition: transform 0.2s ease;
 }
+
+/* Ensure bottom row of cards has breathing room above footer */
+.dashboard-bottom-row { margin-bottom: 70px; }
+
+/* Subtle bottom hairline to distinguish card edge when adjacent to white footer */
+.card-enhanced.with-bottom-line { position: relative; }
+.card-enhanced.with-bottom-line::after { content: ""; position: absolute; left:0; right:0; bottom:0; height:1px; background: linear-gradient(to right,#e2e8f0,#f1f5f9); pointer-events:none; }
+
+@media (max-width: 768px) { .dashboard-bottom-row { margin-bottom: 90px; } }
 </style>
 
 <?php include BASE_PATH . '/templates/footer.php'; ?>

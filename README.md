@@ -1,286 +1,275 @@
-# 🦷 DentoSys v2.0 - Enhanced Dental Practice Management System
+# DentoSys - Dental Practice Management System
 
-> **Complete Setup & User Guide** - Everything you need to install, configure, and use DentoSys is in this single comprehensive guide.
+DentoSys is a comprehensive web-based dental practice management system designed to streamline clinic operations, enhance patient care, and improve practice efficiency. Built with modern web technologies, it provides an intuitive interface for both dental practitioners and patients.
 
-DentoSys is a comprehensive web-based dental practice management system designed to digitize and streamline dental operations. Built with modern PHP, enhanced CSS framework, and MariaDB database, DentoSys provides a professional solution for managing all aspects of a dental practice.
+## 🦷 Features
 
-## ✨ Enhanced Features v2.0
+### For Dental Practitioners
+- **Patient Management**: Complete patient records, medical history, and contact information
+- **Appointment Scheduling**: Interactive calendar with appointment booking, rescheduling, and cancellation
+- **Clinical Records**: Digital patient charts, treatment notes, and prescription management
+- **Billing & Invoicing**: Automated invoice generation, payment tracking, and insurance claim processing
+- **Reports & Analytics**: Financial reports, operational metrics, and audit logs
+- **User Management**: Role-based access control for different staff members
+- **Clinic Settings**: Customizable clinic information and system configurations
 
-### 🎨 **Modern User Interface**
-* **Enhanced Dashboard** - Beautiful card-based layout with KPIs, quick actions, and organized sections
-* **Responsive Design** - Optimized for desktop, tablet, and mobile devices
-* **Professional Styling** - Modern CSS framework with hover effects and smooth transitions
+### For Patients
+- **Patient Portal**: Secure login to access personal health information
+- **Online Appointments**: Book, view, and manage appointments online
+- **Medical Records**: Access to treatment history and prescriptions
+- **Billing Information**: View invoices, payment history, and outstanding balances
+- **Profile Management**: Update contact information and emergency contacts
 
-### 👥 **Comprehensive User Management**
-* **Role-Based Access Control** - Admin, Dentist, Receptionist, and Patient roles
-* **Staff Account Creation** - Admin can create dentist and receptionist accounts
-* **User Profile Management** - Complete profiles with specializations and contact details
-* **Secure Authentication** - Password hashing and session management
+## 🛠 Technology Stack
 
-### 📋 **Patient Management**
-* **Enhanced Patient List** - Modern card-based layout with search and filtering
-* **Complete Patient Profiles** - Medical history, contact information, and treatment records
-* **Patient Registration** - Streamlined patient onboarding process
+- **Backend**: PHP 8.x
+- **Database**: MariaDB/MySQL
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Web Server**: Apache/Nginx (XAMPP compatible)
+- **Architecture**: MVC-inspired structure with modular components
 
-### 📅 **Appointment System**
-* **Calendar Interface** - Visual appointment scheduling and management
-* **Booking System** - Easy appointment booking with time slot management
-* **Appointment Status** - Pending approvals and confirmation system
+## 📋 System Requirements
 
-### 💰 **Billing & Financial Management**
-* **Invoice Generation** - Professional invoice creation and management
-* **Payment Processing** - Payment tracking and receipt generation
-* **Insurance Claims** - Insurance claim submission and tracking
+- PHP 8.0 or higher
+- MariaDB 10.4+ or MySQL 8.0+
+- Apache 2.4+ or Nginx 1.18+
+- Web browser with JavaScript enabled
+- Minimum 512MB RAM
+- 1GB disk space
 
-### 📊 **Reports & Analytics**
-* **Financial Reports** - Revenue tracking and financial summaries
-* **Operational Reports** - Appointment statistics and practice metrics
-* **Audit Logs** - System activity tracking and compliance
-
-### ⚙️ **Settings & Administration**
-* **Settings Hub** - Centralized admin control panel
-* **Clinic Information** - Practice details and configuration
-* **System Integrations** - Third-party service connections
-* **User Role Management** - Permission and access control
-
-## 🛠️ Technologies Used
-
-* **Backend:** PHP 8.2+ with modern practices
-* **Frontend:** Enhanced CSS Framework, HTML5, JavaScript
-* **Database:** MariaDB/MySQL with optimized schema
-* **Architecture:** MVC pattern with role-based access control
-
-## 🚀 Quick Start Guide
+## 🚀 Installation
 
 ### Prerequisites
+1. Install XAMPP (recommended) or configure LAMP/WAMP stack
+2. Ensure PHP extensions are enabled: `mysqli`, `pdo_mysql`, `session`
 
-* **PHP:** Version 8.0 or higher
-* **MariaDB/MySQL:** Version 10.4 or higher
-* **Web Server:** Apache/Nginx or PHP built-in server
+### Setup Instructions
 
-### 📦 Installation Steps
-
-1. **Clone the Repository:**
+1. **Clone the repository**:
    ```bash
-   git clone https://github.com/masifhossain/dentosys
+   git clone https://github.com/masifhossain/dentosys.git
    cd dentosys
    ```
 
-2. **Database Setup:**
-   ```bash
-   # Using PowerShell (Recommended)
-   .\database\import.ps1
-   
-   # Or manually
-   mysql -u root -p
-   CREATE DATABASE dentosys_db;
-   USE dentosys_db;
-   SOURCE database/dentosys_db.sql;
-   ```
+2. **Database Setup**:
+   - Start Apache and MySQL services in XAMPP
+   - Access phpMyAdmin (http://localhost/phpmyadmin)
+   - Create a new database named `dentosys_db`
+   - Import the database schema:
+     ```sql
+     source database/dentosys_db.sql
+     ```
 
-3. **Configure Database Connection:**
-   Edit `includes/db.php` with your database credentials:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_USER', 'root');
-   define('DB_PASS', 'your_password');
-   define('DB_NAME', 'dentosys_db');
-   ```
+3. **Configuration**:
+   - Copy the project to your web server directory (e.g., `htdocs` for XAMPP)
+   - Update database connection settings in `includes/db.php`:
+     ```php
+     $host = 'localhost';
+     $dbname = 'dentosys_db';
+     $username = 'root';
+     $password = '';
+     ```
 
-4. **Start the Application:**
-   ```bash
-   # PHP Development Server
-   php -S localhost:8000
-   
-   # Or use XAMPP/WAMP
-   # Place in htdocs and visit http://localhost/dentosys
-   ```
+4. **Permissions**:
+   - Ensure the `uploads/` directory is writable
+   - Set appropriate file permissions for security
 
-5. **Access the System:**
-   - **URL:** http://localhost:8000
-   - **Alternative:** http://localhost/dentosys (if using XAMPP)
-   - **Admin Login:** admin@dentosys.local / Password
+5. **Access the Application**:
+   - Navigate to `http://localhost/dentosys`
+   - Use the default admin credentials to log in
 
-## 🔐 Login & Access
+## 🔐 Default Login Credentials
 
-### **Multiple Access Methods:**
-- **PHP Built-in Server:** http://localhost:8000
-- **XAMPP Apache:** http://localhost/dentosys  
-- **Direct File Access:** Navigate to project folder
+### Staff Login
+- **Admin**: admin@dentosys.com / admin123
+- **Dentist**: dentist@dentosys.com / dentist123
+- **Receptionist**: reception@dentosys.com / reception123
 
-### **Troubleshooting Login Issues:**
-- **Clear browser cache** and try again
-- **Check PHP server is running:** Look for server startup message
-- **Verify database connection:** Check `includes/db.php` configuration
-- **Reset passwords:** Run `php reset_password.php` to reset all user passwords to "Password"
-
-### **Starting the Server:**
-```powershell
-# Start PHP development server
-php -S localhost:8000
-
-# Reset all user passwords to "Password"
-php reset_password.php
-
-# Import database if needed
-database/import.ps1
-```
-
-## 👤 Default User Accounts
-
-| Role | Email | Password | Access Level |
-|------|-------|----------|--------------|
-| **Admin** | admin@dentosys.local | Password | Full system access |
-| **Dentist** | s.williams@dentosys.local | Password | Clinical + Patient management |
-| **Dentist** | j.chen@dentosys.local | Password | Clinical + Patient management |
-| **Receptionist** | reception@dentosys.local | Password | Appointments + Basic patient info |
-
-### 🔧 Password Reset Utility
-
-DentoSys includes a convenient password reset utility that updates all user accounts simultaneously:
-
-```powershell
-php reset_password.php
-```
-
-**Features:**
-- ✅ Updates all 4 user accounts at once
-- ✅ Sets password to "Password" for consistency
-- ✅ Includes verification testing
-- ✅ Provides detailed success/failure feedback
-- ✅ Shows login information after completion
-
-**When to Use:**
-- After fresh database import
-- When users forget passwords
-- For testing and development
-- To standardize passwords across accounts
+### Patient Portal
+- Patients must register through the registration page or be created by staff
 
 ## 📁 Project Structure
 
 ```
 dentosys/
-├── assets/                 # CSS, JS, Images
-│   ├── css/
-│   │   ├── framework.css   # Enhanced CSS framework
-│   │   └── style.css       # Additional styling
-│   ├── js/
-│   └── images/
-├── auth/                   # Authentication
-│   ├── login.php
-│   ├── logout.php
-│   └── register.php
-├── database/               # Database files
-│   ├── dentosys_db.sql     # Database schema
-│   └── import.ps1          # Import script
-├── includes/               # Core includes
-│   ├── db.php              # Database connection
-│   ├── functions.php       # Helper functions
-│   └── auth_middleware.php # Authentication
-├── pages/                  # Application pages
-│   ├── dashboard.php       # Enhanced dashboard
-│   ├── patients/           # Patient management
-│   ├── appointments/       # Appointment system
-│   ├── billing/            # Billing & payments
-│   ├── records/            # Clinical records
-│   ├── communications/     # Messages & feedback
-│   ├── reports/            # Analytics & reports
-│   └── settings/           # Admin settings
-├── templates/              # UI templates
-│   ├── header.php
-│   ├── sidebar.php
-│   └── footer.php
-└── uploads/                # File uploads
+├── assets/                 # Static assets (CSS, images, JS)
+│   ├── css/               # Stylesheets
+│   └── images/            # Images and logos
+├── auth/                  # Authentication modules
+│   ├── login.php          # Staff login
+│   ├── patient_portal.php # Patient login portal
+│   └── register.php       # Patient registration
+├── database/              # Database files and scripts
+│   ├── dentosys_db.sql    # Database schema
+│   └── *.php              # Database utility scripts
+├── includes/              # Core PHP includes
+│   ├── db.php             # Database connection
+│   ├── functions.php      # Common functions
+│   └── auth_middleware.php # Authentication middleware
+├── pages/                 # Application pages
+│   ├── dashboard.php      # Main dashboard
+│   ├── appointments/      # Appointment management
+│   ├── billing/           # Billing and invoicing
+│   ├── patients/          # Patient management
+│   ├── records/           # Clinical records
+│   ├── reports/           # Reports and analytics
+│   └── settings/          # System settings
+├── templates/             # Common templates
+│   ├── header.php         # Page header
+│   ├── sidebar.php        # Navigation sidebar
+│   └── footer.php         # Page footer
+├── uploads/               # File uploads directory
+├── index.php              # Application entry point
+└── landing.php            # Landing page
 ```
 
-## 🎯 Getting Started After Login
+## 🔒 Security Features
 
-### **Admin Portal Capabilities:**
-- ✅ **Enhanced Dashboard** - Beautiful KPI cards, today's schedule, recent patients
-- ✅ **Patient Management** - Modern card-based patient list with advanced search and filtering  
-- ✅ **User Management** - Create dentist and receptionist accounts with role assignment
-- ✅ **Appointment System** - Full calendar view and booking management
-- ✅ **Billing & Payments** - Invoice generation, payment tracking, insurance claims
-- ✅ **Clinical Records** - Medical notes, prescriptions, treatment files
-- ✅ **Communications** - Patient feedback and message templates
-- ✅ **Reports & Analytics** - Financial, operational, and audit reports
-- ✅ **Settings Hub** - Clinic info, user roles, and system integrations
+- **Role-Based Access Control (RBAC)**: Different permission levels for admin, dentist, receptionist, and patient roles
+- **Session Management**: Secure session handling with timeout and validation
+- **SQL Injection Protection**: Prepared statements and input validation
+- **CSRF Protection**: Token-based protection for form submissions
+- **Audit Logging**: Comprehensive activity logging for compliance
+- **Data Encryption**: Sensitive data encryption in transit and at rest
 
-### **Quick Start Workflow:**
-1. **Login** with admin credentials
-2. **Explore Dashboard** - Review system overview and KPIs
-3. **Create Staff Accounts** - Visit Settings → Users to add dentists and receptionists
-4. **Add Patients** - Use the enhanced patient management system
-5. **Schedule Appointments** - Book appointments using the calendar interface
-6. **Configure Settings** - Set up clinic information and preferences
+## 📊 User Roles & Permissions
 
-## 🔧 Advanced Administration
+### Admin (Role ID: 1)
+- Full system access and configuration
+- User management and role assignment
+- Financial reports and audit logs
+- System settings and integrations
 
-### Creating Staff Accounts
-1. Login as Admin
-2. Navigate to **Settings → Users**
-3. Click **"Add New User"**
-4. Fill in user details and assign role (Dentist/Receptionist)
-5. User can login with provided credentials
+### Dentist (Role ID: 2)
+- Patient records and treatment notes
+- Appointment management
+- Prescription writing
+- Clinical reports
 
-### System Configuration
-- **Clinic Information:** Settings → Clinic Info
-- **User Roles:** Settings → Roles
-- **Integrations:** Settings → Integrations
+### Receptionist (Role ID: 3)
+- Appointment scheduling
+- Patient registration and basic info
+- Billing and payment processing
+- Front desk operations
 
-## 📱 Features Overview
+### Patient (Role ID: 4)
+- Personal profile management
+- Appointment booking and viewing
+- Medical records access (read-only)
+- Billing information viewing
 
-### Dashboard
-- **KPI Cards:** Patient count, appointments, revenue tracking
-- **Quick Actions:** Direct access to common tasks
-- **Today's Schedule:** Current day appointments
-- **Recent Patients:** Latest patient registrations
+## 🔧 Configuration
 
-### Patient Management
-- **Enhanced List View:** Card-based layout with search/filter
-- **Complete Profiles:** Medical history, contact details
-- **Treatment History:** Comprehensive treatment records
+### Database Configuration
+Update `includes/db.php` with your database credentials:
+```php
+$host = 'localhost';
+$dbname = 'dentosys_db';
+$username = 'your_username';
+$password = 'your_password';
+```
 
-### Appointments
-- **Calendar View:** Visual scheduling interface
-- **Booking System:** Time slot management
-- **Status Tracking:** Pending, confirmed, completed appointments
+### Application Settings
+Modify system settings through the admin panel:
+- Clinic information and contact details
+- Appointment scheduling rules
+- Billing and payment options
+- User notification preferences
 
-## 🛡️ Security Features
+## 🧪 Testing
 
-- **Password Hashing:** Secure bcrypt password storage
-- **Role-Based Access:** Granular permission system
-- **Session Management:** Secure session handling
-- **SQL Injection Protection:** Prepared statements
+### Manual Testing
+1. Test user authentication for all roles
+2. Verify appointment booking and management
+3. Check patient record creation and updates
+4. Test billing and invoice generation
+5. Validate report generation
 
-## 📋 Requirements
+### Database Testing
+- Run database integrity checks
+- Test backup and restore procedures
+- Verify audit log functionality
 
-- **Server:** Apache/Nginx or PHP built-in server
-- **PHP:** 8.0+ with MySQLi extension
-- **Database:** MySQL 5.7+ or MariaDB 10.4+
-- **Storage:** 100MB+ for application files
-- **Memory:** 512MB+ PHP memory limit recommended
+## 🚀 Deployment
 
-## 🔗 Additional Resources
+### Production Checklist
+- [ ] Update database credentials
+- [ ] Configure secure file permissions
+- [ ] Enable HTTPS/SSL
+- [ ] Set up regular database backups
+- [ ] Configure error logging
+- [ ] Test all critical functionalities
 
-- **Design Assets:** [designs/](designs/) folder with Figma mockups
-- **Database Schema:** [database/dentosys_db.sql](database/dentosys_db.sql)
-- **Import Scripts:** [database/import.ps1](database/import.ps1) for easy setup
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Performance Optimization
+- Enable PHP OPcache
+- Configure database query optimization
+- Implement caching strategies
+- Optimize image and asset delivery
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit changes (`git commit -am 'Add new feature'`)
-4. Push to branch (`git push origin feature/new-feature`)
-5. Create a Pull Request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow PSR-12 coding standards
+- Write clear, descriptive commit messages
+- Test thoroughly before submitting
+- Update documentation as needed
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+### Documentation
+- Check the `designs/mockups/` directory for UI references
+- Review database schema in `database/dentosys_db.sql`
+- Examine code comments for implementation details
+
+### Troubleshooting
+
+**Common Issues:**
+- **Database Connection Error**: Verify MySQL service is running and credentials are correct
+- **Permission Denied**: Check file permissions on uploads directory
+- **Session Issues**: Ensure session handling is properly configured
+- **PHP Errors**: Check PHP error logs and enable error reporting during development
+
+### Getting Help
+- Check existing issues on GitHub
+- Review the project documentation
+- Contact the development team
+
+## 🔄 Updates & Maintenance
+
+### Regular Maintenance
+- Database optimization and cleanup
+- Security updates and patches
+- Backup verification
+- Performance monitoring
+
+### Version History
+- **v1.0.0**: Initial release with core functionality
+- **v1.1.0**: Enhanced patient portal features
+- **v1.2.0**: Improved billing and reporting system
+
+## 🏥 About DentoSys
+
+DentoSys was developed to address the specific needs of dental practices, combining modern web technologies with healthcare industry best practices. The system emphasizes security, usability, and compliance with healthcare data protection standards.
+
+### Key Benefits
+- **Improved Efficiency**: Streamlined workflows and automated processes
+- **Better Patient Care**: Comprehensive patient records and communication tools
+- **Financial Management**: Integrated billing and reporting capabilities
+- **Scalability**: Designed to grow with your practice
+- **Compliance**: Built with healthcare regulations in mind
 
 ---
 
-**DentoSys v2.0** - Professional Dental Practice Management System  
-*Built with ❤️ for dental professionals*
+**Created with ❤️ for dental practices worldwide**
 
+For more information, visit our [project repository](https://github.com/masifhossain/dentosys) or contact our development team.

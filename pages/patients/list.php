@@ -20,12 +20,21 @@ require_once dirname(__DIR__, 2) . '/includes/db.php';
 require_once BASE_PATH . '/includes/functions.php';
 
 require_login();
+require_staff(); // Only staff can access patient lists
+
+require_login();
 
 /* ───────── Enhanced search and filtering ───────── */
 $where_conditions = [];
 $search = trim($_GET['q'] ?? '');
 $filter_status = $_GET['status'] ?? '';
 $sort_by = $_GET['sort'] ?? 'name';
+
+// Add dentist patient filtering
+if (is_dentist()) {
+    $dentist_filter = get_dentist_patient_filter_sql('patient_id');
+    $where_conditions[] = $dentist_filter;
+}
 
 if ($search !== '') {
     $esc = $conn->real_escape_string($search);
@@ -54,7 +63,8 @@ switch ($sort_by) {
         $order_clause .= 'created_at DESC';
         break;
     case 'age':
-        $order_clause .= 'date_of_birth DESC';
+        // Sort by dob descending (youngest first). Column name is 'dob'.
+        $order_clause .= 'dob DESC';
         break;
     default:
         $order_clause .= 'last_name, first_name';
@@ -71,9 +81,11 @@ $sql = "SELECT patient_id, first_name, last_name, email, phone, dob,
 
 $patients = $conn->query($sql);
 
-// Get statistics
-$total_patients = $conn->query("SELECT COUNT(*) as c FROM patient")->fetch_assoc()['c'];
-$new_this_month = $conn->query("SELECT COUNT(*) as c FROM patient WHERE MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())")->fetch_assoc()['c'];
+// Get statistics - apply same filtering for dentists
+$stats_where = is_dentist() ? 'WHERE ' . get_dentist_patient_filter_sql('patient_id') : '';
+$total_patients = $conn->query("SELECT COUNT(*) as c FROM patient $stats_where")->fetch_assoc()['c'];
+$new_this_month = $conn->query("SELECT COUNT(*) as c FROM patient $stats_where " . 
+    (is_dentist() ? "AND" : "WHERE") . " MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())")->fetch_assoc()['c'];
 
 include BASE_PATH . '/templates/header.php';
 include BASE_PATH . '/templates/sidebar.php';
@@ -82,9 +94,9 @@ include BASE_PATH . '/templates/sidebar.php';
 <main class="main-content-enhanced">
     <!-- Header Section -->
     <div class="content-header">
-        <h1>👥 Patient Management</h1>
+        <h1>👥 <?= is_dentist() ? 'My Patients' : 'Patient Management' ?></h1>
         <div class="breadcrumb">
-            <?= $total_patients; ?> total patients • <?= $new_this_month; ?> joined this month
+            <?= $total_patients; ?> <?= is_dentist() ? 'assigned' : 'total' ?> patients • <?= $new_this_month; ?> joined this month
         </div>
     </div>
 
@@ -158,7 +170,9 @@ include BASE_PATH . '/templates/sidebar.php';
                         <div style="display: flex; gap: 8px;">
                             <button type="submit" class="btn-primary-enhanced">🔍 Search</button>
                             <a href="list.php" class="btn-secondary-enhanced">Reset</a>
+                            <?php if (!is_dentist()): ?>
                             <a href="add.php" class="btn-success-enhanced">+ Add Patient</a>
+                            <?php endif; ?>
                         </div>
                     </form>
                 </div>
@@ -175,9 +189,15 @@ include BASE_PATH . '/templates/sidebar.php';
                         <div style="font-size: 64px; margin-bottom: 24px;">👤</div>
                         <h3 style="margin: 0 0 16px; color: var(--figma-text-primary);">No Patients Found</h3>
                         <p style="color: var(--figma-text-secondary); margin-bottom: 32px;">
-                            <?= $search ? "No patients match your search criteria." : "Get started by adding your first patient."; ?>
+                            <?php if (is_dentist()): ?>
+                                No patients have been assigned to you yet. Patients are assigned when appointments are scheduled.
+                            <?php else: ?>
+                                <?= $search ? "No patients match your search criteria." : "Get started by adding your first patient."; ?>
+                            <?php endif; ?>
                         </p>
+                        <?php if (!is_dentist()): ?>
                         <a href="add.php" class="btn-primary-enhanced">Add Your First Patient</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php else: ?>
@@ -281,10 +301,17 @@ include BASE_PATH . '/templates/sidebar.php';
                                    class="btn-secondary-enhanced" style="flex: 1; text-align: center; font-size: 12px; padding: 8px;">
                                     ✏️ Edit
                                 </a>
+                                <?php if (!is_dentist()): ?>
                                 <a href="../appointments/book.php?patient_id=<?= $patient['patient_id']; ?>" 
                                    class="btn-primary-enhanced" style="flex: 1; text-align: center; font-size: 12px; padding: 8px;">
                                     📅 Book
                                 </a>
+                                <?php else: ?>
+                                <a href="../records/add_prescription.php?patient_id=<?= $patient['patient_id']; ?>" 
+                                   class="btn-primary-enhanced" style="flex: 1; text-align: center; font-size: 12px; padding: 8px;">
+                                    💊 Prescribe
+                                </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

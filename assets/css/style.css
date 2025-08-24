@@ -1,56 +1,417 @@
-/* General Body & Layout */
+/* =================================================================
+   BASE & LAYOUT
+================================================================= */
 body {
-  background-color: #f8f9fa;
+  background-color: #f1f5f9; /* Lightest gray for the body */
+  font-family: 'Inter', sans-serif;
+  color: #334155;
+  margin: 0;
 }
 
-.sidebar {
-  width: 240px;
-  min-height: 100vh;
-  background-color: #004F6E;
-  color: #fff;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+/* =================================================================
+   COMMON GRADIENTS
+================================================================= */
+.gradient-primary {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
 }
 
-.sidebar .logo {
-  padding: 1.25rem 1rem;
+.gradient-success {
+  background: linear-gradient(135deg, #059669, #047857);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.gradient-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-blue-light {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+
+.gradient-gray-light {
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+}
+
+.gradient-blue-bg {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.gradient-dark {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+}
+
+.gradient-blue-btn {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+/* =================================================================
+   UTILITY CLASSES
+================================================================= */
+
+/* Spacing utilities */
+.mb-20 { margin-bottom: 20px; }
+.mb-30 { margin-bottom: 30px; }
+.mb-16 { margin-bottom: 16px; }
+.mt-2 { margin-top: 2px; }
+.gap-12 { gap: 12px; }
+
+/* Display utilities */
+.d-flex { display: flex; }
+.d-none { display: none; }
+.align-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { align-items: end; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+
+/* Text utilities */
+.text-center { text-align: center; }
+.text-sm { font-size: 14px; }
+.text-xs { font-size: 12px; }
+.text-gray { color: #64748b; }
+.text-dark { color: #1e293b; }
+.font-semibold { font-weight: 600; }
+
+/* Layout utilities */
+.user-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  background: #f8fafc;
+}
+
+.avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.empty-state {
   text-align: center;
+  padding: 40px 20px;
+  color: #64748B;
 }
 
-.sidebar .logo img {
-  max-width: 150px;
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
 }
 
-.sidebar .nav-link {
-  color: #e9ecef;
-  padding: 0.75rem 1.25rem;
-  font-size: 0.95rem;
+.min-w-140 { min-width: 140px; }
+
+.main-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
 }
 
-.sidebar .nav-link:hover, .sidebar .nav-link.active {
-  color: #fff;
-  background-color: #003f58;
-  border-left: 3px solid #0dcaf0;
-  padding-left: calc(1.25rem - 3px);
-}
-
-.sidebar .user-info {
-  padding: 1rem 1.25rem;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  border-top: 1px solid #226680;
-  border-bottom: 1px solid #226680;
-  background-color: rgba(0,0,0,0.1);
-}
-
-.sidebar .user-info strong {
-  color: #fff;
-  font-size: 0.85rem;
-}
-
-main {
+main.content {
   flex: 1;
   padding: 2rem;
-  overflow-x: auto;
+  overflow-y: auto;
+}
+
+/* =================================================================
+   PATIENT PORTAL PAGES (`.patient-page`)
+================================================================= */
+
+/* This is the main container for the full-width patient pages */
+.patient-page.full-width .content {
+  padding: 0; /* Remove padding to allow header to be full-bleed */
+}
+
+.patient-page .page-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 2rem; /* Add padding here instead of the main content area */
+}
+
+/* Page Header */
+.patient-page .content-header {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  padding: 2.5rem 2rem;
+  border-radius: 0; /* Full bleed */
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.patient-page .content-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.patient-page .content-header .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Section Headers (e.g., "Appointments", "Invoices") */
+.billing-header,
+.appointments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.billing-header h2,
+.appointments-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+/* =================================================================
+   COMPONENTS
+================================================================= */
+
+/* Summary Cards (Billing Page) */
+.billing-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.summary-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.5rem;
+}
+
+.summary-card p {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.summary-card.outstanding p {
+    color: #ef4444;
+}
+
+/* Data Tables (Billing Page) */
+.table-responsive {
+    overflow-x: auto;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table th, .table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table thead th {
+    background-color: #f8fafc;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table .status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+.table .status-paid, .status-completed { background-color: #dcfce7; color: #166534; }
+.table .status-pending, .status-unpaid { background-color: #fef9c3; color: #854d0e; }
+.table .status-cancelled, .status-overdue { background-color: #fee2e2; color: #991b1b; }
+
+
+/* Grid Cards (Appointments & Prescriptions) */
+.appointments-grid,
+.prescriptions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.appointment-card,
+.prescription-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.appointment-card:hover,
+.prescription-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Appointment Card Specifics */
+.appointment-card {
+    flex-direction: row;
+    padding: 1.5rem;
+    align-items: center;
+    gap: 1.5rem;
+}
+.appointment-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #eef2ff;
+    color: #4338ca;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-weight: 700;
+    min-width: 70px;
+}
+.appointment-date .month { font-size: 0.875rem; text-transform: uppercase; }
+.appointment-date .day { font-size: 1.75rem; line-height: 1; }
+.appointment-date .year { font-size: 0.875rem; color: #64748b; }
+
+.appointment-details { flex: 1; }
+.appointment-details div { display: flex; align-items: center; gap: 0.5rem; color: #475569; margin-bottom: 0.25rem; }
+.appointment-details i { color: #94a3b8; }
+
+.appointment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+.status-approved { background-color: #dcfce7; color: #166534; }
+.status-pending { background-color: #fef9c3; color: #854d0e; }
+.status-cancelled { background-color: #fee2e2; color: #991b1b; }
+
+
+/* Prescription Card Specifics */
+.prescription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+.prescription-date, .prescription-doctor { font-weight: 600; color: #475569; }
+
+.prescription-card .medication-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 1.5rem 1.5rem 0;
+    margin: 0;
+}
+.prescription-card .dosage-info, .frequency-info, .duration-info {
+    padding: 0.25rem 1.5rem;
+    color: #475569;
+}
+.prescription-card .instructions {
+    margin: 1rem 1.5rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 3px solid #6366f1;
+}
+.prescription-footer {
+    margin-top: auto;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    text-align: right;
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+
+/* No Data State */
+.no-data {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+.no-data-icon { font-size: 3rem; margin-bottom: 1rem; }
+.no-data h3 { font-size: 1.5rem; color: #0f172a; margin: 0 0 0.5rem; font-weight: 600; }
+.no-data p { color: #374151; margin: 0 0 1.5rem; font-weight: 500; }
+
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all .2s ease;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+.btn-primary:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+}
+.btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
 }
 
 /* Flash Messages */
@@ -58,61 +419,22 @@ main {
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: .5rem;
 }
-.flash.success {
-  color: #0f5132;
-  background-color: #d1e7dd;
-  border-color: #badbcc;
-}
-.flash.error {
-  color: #842029;
-  background-color: #f8d7da;
-  border-color: #f5c2c7;
-}
-.flash.info {
-  color: #055160;
-  background-color: #cff4fc;
-  border-color: #b6effb;
-}
+.flash.success { color: #0f5132; background-color: #d1e7dd; border-color: #badbcc; }
+.flash.error { color: #842029; background-color: #f8d7da; border-color: #f5c2c7; }
+.flash.info { color: #055160; background-color: #cff4fc; border-color: #b6effb; }
 
-
-/* Calendar */
-.calendar {
-  margin-top: 1.5rem;
-}
-.calendar td {
-  vertical-align: top;
-  height: 100px;
-}
-.calendar .day {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-.calendar .empty {
-  background-color: #f8f9fa;
-}
-.appt {
-  font-size: 0.75rem;
-  padding: 2px 4px;
-  margin-bottom: 3px;
-  border-radius: 3px;
-  color: #212529;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.appt.pending { background-color: #ffc107; }
-.appt.ok, .appt.Approved { background-color: #198754; color: #fff; }
-.appt.cancel, .appt.Cancelled { background-color: #dc3545; color: #fff; }
-
-
-/* Login/Register Cards */
+/* =================================================================
+   AUTH PAGES
+================================================================= */
 .auth-card {
   width: 100%;
   max-width: 420px;
   padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 .auth-card img {
   max-width: 180px;
